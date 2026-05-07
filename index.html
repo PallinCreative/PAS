@@ -67,20 +67,20 @@
 
     <script>
         // --- DIN KONFIGURASJON ---
-        // Her legger du inn lenkene til de andre sidene dine på GitHub eller Google Sites.
-        // Hvis du lager en fil som heter "helse.html" på GitHub, skriver du bare "helse.html".
+        // Bytt ut "DIN_LINK_HER" med de ekte Google Sites-adressene dine! 
+        // Den vil nå automatisk åpne disse i SAMME fane for en sømløs opplevelse.
         const data = [
             {
                 id: "relasjoner",
                 mainLabel: "Mellommenneskelige relasjoner",
                 descLabel: "Hvem liker jeg å være sammen med & hva kan vi finne på sammen",
                 colorMain: "#6A2B86", colorDesc: "#6A2B86",
-                link: "relasjoner.html", 
+                link: "DIN_LINK_HER", 
                 slices: [
-                    { label: "Min familie", color: "#936AB0", link: "familie.html" },
-                    { label: "Mine venner", color: "#A985C1", link: "venner.html" },
-                    { label: "Mine hjelpere", color: "#C4ACD7", link: "hjelpere.html" },
-                    { label: "Lokal-|samfunnet|mitt", color: "#E5DAED", link: "lokalsamfunn.html" }
+                    { label: "Min familie", color: "#936AB0", link: "DIN_LINK_HER" },
+                    { label: "Mine venner", color: "#A985C1", link: "DIN_LINK_HER" },
+                    { label: "Mine hjelpere", color: "#C4ACD7", link: "DIN_LINK_HER" },
+                    { label: "Lokal-|samfunnet|mitt", color: "#E5DAED", link: "DIN_LINK_HER" }
                 ]
             },
             {
@@ -88,11 +88,11 @@
                 mainLabel: "Fysiske omgivelser",
                 descLabel: "Steder jeg liker å være & hvordan jeg liker at de skal være",
                 colorMain: "#00747A", colorDesc: "#00747A",
-                link: "omgivelser.html",
+                link: "DIN_LINK_HER",
                 slices: [
-                    { label: "Hjemmet|mitt", color: "#009FA5", link: "hjemmet.html" },
-                    { label: "Steder|utenfor|hjemmet mitt", color: "#76CDD0", link: "steder-utenfor.html" },
-                    { label: "Personalets|ferdigheter|& kunnskaper", color: "#D5EFEF", link: "personale.html" }
+                    { label: "Hjemmet|mitt", color: "#009FA5", link: "DIN_LINK_HER" },
+                    { label: "Steder|utenfor|hjemmet mitt", color: "#76CDD0", link: "DIN_LINK_HER" },
+                    { label: "Personalets|ferdigheter|& kunnskaper", color: "#D5EFEF", link: "DIN_LINK_HER" }
                 ]
             },
             {
@@ -100,11 +100,11 @@
                 mainLabel: "Meningsfull tid",
                 descLabel: "Ting jeg liker å gjøre & planer for ukene som kommer",
                 colorMain: "#2B5592", colorDesc: "#2B5592",
-                link: "tid.html",
+                link: "DIN_LINK_HER",
                 slices: [
-                    { label: "Mitt arbeid", color: "#678EC9", link: "arbeid.html" },
-                    { label: "Fritid og|moro", color: "#A2C0E2", link: "fritid.html" },
-                    { label: "Mine|aktiviteter", color: "#D9E8F5", link: "aktiviteter.html" }
+                    { label: "Mitt arbeid", color: "#678EC9", link: "DIN_LINK_HER" },
+                    { label: "Fritid og|moro", color: "#A2C0E2", link: "DIN_LINK_HER" },
+                    { label: "Mine|aktiviteter", color: "#D9E8F5", link: "DIN_LINK_HER" }
                 ]
             },
             {
@@ -112,10 +112,10 @@
                 mainLabel: "Personlig utvikling",
                 descLabel: "Lære nye ferdigheter",
                 colorMain: "#A9225E", colorDesc: "#A9225E",
-                link: "utvikling.html",
+                link: "DIN_LINK_HER",
                 slices: [
-                    { label: "Kommunikasjons-|ferdigheter", color: "#D97CA4", link: "kommunikasjon.html" },
-                    { label: "Lære nye|ferdigheter", color: "#F2CADB", link: "ferdigheter.html" }
+                    { label: "Kommunikasjons-|ferdigheter", color: "#D97CA4", link: "DIN_LINK_HER" },
+                    { label: "Lære nye|ferdigheter", color: "#F2CADB", link: "DIN_LINK_HER" }
                 ]
             },
             {
@@ -123,9 +123,9 @@
                 mainLabel: "Helse",
                 descLabel: "Best mulig helse for meg",
                 colorMain: "#727679", colorDesc: "#727679",
-                link: "helse.html",
+                link: "DIN_LINK_HER",
                 slices: [
-                    { label: "Best mulig|helse", color: "#B5B7B9", link: "helse-detaljer.html" }
+                    { label: "Best mulig|helse", color: "#B5B7B9", link: "DIN_LINK_HER" }
                 ]
             }
         ];
@@ -171,11 +171,12 @@
                     let textRadius = (R_RING1 + R_RING2) / 2;
                     let textPos = getCoords(CX, CY, textRadius, midAngle);
                     
-                    // LAG LENKE: Ingen target="_blank" her, så den åpner i samme fane!
-                    slicesStr += `<a href="${slice.link}">
-                        <path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" stroke="white" stroke-width="2">
+                    // LAG LENKE: Setter lenken til å åpne i samme fane med JavaScript
+                    let onClickAction = (slice.link && slice.link !== "DIN_LINK_HER") ? `onclick="window.location.href='${slice.link}'"` : "";
+
+                    slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" stroke="white" stroke-width="2" ${onClickAction}>
                             <title>${slice.label.replace(/\|/g, ' ')}</title>
-                        </path></a>`;
+                        </path>`;
 
                     let textRot = midAngle;
                     if (((midAngle % 360) + 360) % 360 > 90 && ((midAngle % 360) + 360) % 360 < 270) textRot += 180;
@@ -195,9 +196,10 @@
                 let isTopHalf = (((midCatAngle % 360) + 360) % 360) > 180 && (((midCatAngle % 360) + 360) % 360) < 360;
                 let titleRadius = isTopHalf ? 415 : 355, descRadius = isTopHalf ? 355 : 415;
 
-                slicesStr += `<a href="${mainCat.link}">
-                    <path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" stroke="white" stroke-width="3">
-                        <title>${mainCat.mainLabel}</title></path></a>`;
+                let mainOnClick = (mainCat.link && mainCat.link !== "DIN_LINK_HER") ? `onclick="window.location.href='${mainCat.link}'"` : "";
+                
+                slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" stroke="white" stroke-width="3" ${mainOnClick}>
+                        <title>${mainCat.mainLabel}</title></path>`;
 
                 let pathIdMain = `path_main_${catIndex}`;
                 svgStr += createTextPath(pathIdMain, CX, CY, titleRadius, catStartAngle, catEndAngle);
