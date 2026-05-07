@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+initial-scale=1.0">
+<title>Det Optimale Livshjulet</title>
+<style>
+body {
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+background-color: transparent;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana,
+
+sans-serif;
+}
+#wheel-container {
+width: 100%;
+max-width: 900px;
+height: auto;
+aspect-ratio: 1 / 1;
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+border-radius: 50%;
+background-color: transparent;
+}
+svg {
+width: 100%;
+height: 100%;
+}
+/* Forhindrer at teksten kan markeres med musen (fjerner
+
+tekst-pekeren) */
+svg text {
+user-select: none;
+-webkit-user-select: none;
+text-rendering: geometricPrecision; /* Ekstra sikring
+
+mot tekst-hopping for alt annet */
+
+}
+/* Hover-effekter for interaktivitet */
+.interactive-slice {
+cursor: pointer;
+filter: brightness(1); /* Hindrer at grafikken "hopper"
+
+når filteret slås på */
+
+transition: filter 0.2s ease, stroke-width 0.2s ease;
+}
+.interactive-slice:hover {
+filter: brightness(1.1);
+stroke: #fff;
+stroke-width: 4px;
+}
+/* Tekst-styling */
+.radial-text {
+pointer-events: none;
+font-size: 15px;
+font-weight: 800;
+fill: #000;
+}
+.arc-text-title {
+pointer-events: none;
+font-size: 22px;
+font-weight: bold;
+fill: white;
+}
+.arc-text-desc {
+pointer-events: none;
+font-size: 15px;
+fill: white;
+}
+.inner-ring-text {
+pointer-events: none;
+font-size: 17px;
+font-weight: 900;
+fill: #000;
+letter-spacing: 0.5px;
+}
+</style>
+</head>
+
+<body>
+<div id="wheel-container"></div>
+<script>
+// --- KONFIGURASJON AV HJULET ---
+const CX = 500; // Senter X
+const CY = 500; // Senter Y
+const R_CENTER = 70; // Sort senter
+const R_RING1 = 120; // Hvit indre ring (Valg,
+
+Kommunikasjon etc)
+
+const R_RING2 = 310; // Sub-kategorier (Familie, Fritid
+
+etc)
+
+const R_RING3 = 460; // Hovedkategorier og beskrivelser
+
+slått sammen i én ring
+
+// Definerer de 13 sub-kategoriene i rekkefølge (starter på
+
+9 o'clock / venstre side, går med klokka)
+
+const totalSlices = 13;
+const sliceAngle = 360 / totalSlices;
+const data = [
+{
+id: "relasjoner",
+mainLabel: "Mellommenneskelige relasjoner",
+descLabel: "Hvem liker jeg å være sammen med & hva
+
+kan vi finne på sammen",
+
+colorMain: "#6A2B86",
+colorDesc: "#6A2B86",
+link: "DIN_LINK_HER",
+slices: [
+{ label: "Min familie", color: "#936AB0", link:
+
+"DIN_LINK_HER" },
+
+{ label: "Mine venner", color: "#A985C1", link:
+
+"DIN_LINK_HER" },
+
+{ label: "Mine hjelpere", color: "#C4ACD7",
+
+link: "DIN_LINK_HER" },
+
+{ label: "Lokal-|samfunnet|mitt", color:
+
+"#E5DAED", link: "DIN_LINK_HER" }
+
+]
+},
+{
+id: "omgivelser",
+mainLabel: "Fysiske omgivelser",
+descLabel: "Steder jeg liker å være & hvordan jeg
+
+liker at de skal være",
+
+colorMain: "#00747A",
+colorDesc: "#00747A",
+
+link: "DIN_LINK_HER",
+slices: [
+{ label: "Hjemmet|mitt", color: "#009FA5",
+
+link: "DIN_LINK_HER" },
+
+{ label: "Steder|utenfor|hjemmet mitt", color:
+
+"#76CDD0", link: "DIN_LINK_HER" },
+
+{ label: "Personalets|ferdigheter|&
+kunnskaper", color: "#D5EFEF", link: "DIN_LINK_HER" }
+
+]
+},
+{
+id: "tid",
+mainLabel: "Meningsfull tid",
+descLabel: "Ting jeg liker å gjøre & planer for
+
+ukene som kommer",
+
+colorMain: "#2B5592",
+colorDesc: "#2B5592",
+link: "DIN_LINK_HER",
+slices: [
+{ label: "Mitt arbeid", color: "#678EC9", link:
+
+"DIN_LINK_HER" },
+
+{ label: "Fritid og|moro", color: "#A2C0E2",
+
+link: "DIN_LINK_HER" },
+
+{ label: "Mine|aktiviteter", color: "#D9E8F5",
+
+link: "DIN_LINK_HER" }
+]
+},
+{
+id: "utvikling",
+mainLabel: "Personlig utvikling",
+descLabel: "Lære nye ferdigheter",
+colorMain: "#A9225E",
+colorDesc: "#A9225E",
+link: "DIN_LINK_HER",
+slices: [
+{ label: "Kommunikasjons-|ferdigheter", color:
+
+"#D97CA4", link: "DIN_LINK_HER" },
+
+{ label: "Lære nye|ferdigheter", color:
+
+"#F2CADB", link: "DIN_LINK_HER" }
+
+]
+},
+{
+id: "helse",
+mainLabel: "Helse",
+descLabel: "Best mulig helse for meg",
+colorMain: "#727679",
+colorDesc: "#727679",
+link: "DIN_LINK_HER",
+
+slices: [
+{ label: "Best mulig|helse", color: "#B5B7B9",
+
+link: "DIN_LINK_HER" }
+]
+}
+];
+// --- HJELPEFUNKSJONER FOR MATEMATIKK OG TEGNING ---
+// Gjør om grader til X/Y koordinater
+function getCoords(cx, cy, r, angleDeg) {
+let rad = angleDeg * Math.PI / 180;
+return {
+x: cx + r * Math.cos(rad),
+y: cy + r * Math.sin(rad)
+};
+}
+// Tegner et "kakestykke" (donut-slice) med start og
+
+slutt-radius
+
+function createSlicePath(cx, cy, rIn, rOut, startAngle,
+
+endAngle) {
+
+let p1 = getCoords(cx, cy, rIn, startAngle);
+let p2 = getCoords(cx, cy, rOut, startAngle);
+let p3 = getCoords(cx, cy, rOut, endAngle);
+let p4 = getCoords(cx, cy, rIn, endAngle);
+let largeArc = endAngle - startAngle <= 180 ? "0" :
+
+"1";
+
+return \`M \${p1.x} \${p1.y} L \${p2.x} \${p2.y} A
+\${rOut} \${rOut} 0 \${largeArc} 1 \${p3.x} \${p3.y} L \${p4.x}
+\${p4.y} A \${rIn} \${rIn} 0 \${largeArc} 0 \${p1.x} \${p1.y} Z\`;
+
+}
+// Lager en usynlig strek som teksten kan følge (med klokka
+for øvre halvdel, mot klokka for nedre halvdel for å unngå opp-ned
+tekst)
+
+function createTextPath(id, cx, cy, r, startAngle,
+
+endAngle) {
+
+let midAngle = (startAngle + endAngle) / 2;
+// Normaliser vinkelen til 0-360
+let normalizedMid = ((midAngle % 360) + 360) % 360;
+let pStart, pEnd, sweepFlag;
+if (normalizedMid > 180 && normalizedMid < 360) {
+// Øvre halvdel - Tekst går med klokka (Venstre til
+
+Høyre)
+
+pStart = getCoords(cx, cy, r, startAngle);
+pEnd = getCoords(cx, cy, r, endAngle);
+sweepFlag = 1;
+return \`<path id="\${id}" d="M \${pStart.x}
+\${pStart.y} A \${r} \${r} 0 0 \${sweepFlag} \${pEnd.x} \${pEnd.y}"
+fill="none" stroke="none" />\`;
+
+} else {
+// Nedre halvdel - Tekst går mot klokka (Venstre
+
+til Høyre) for å ikke bli opp-ned
+
+pStart = getCoords(cx, cy, r, endAngle); // Byttet
+
+start/slutt
+
+pEnd = getCoords(cx, cy, r, startAngle);
+sweepFlag = 0; // Mot klokka
+return \`<path id="\${id}" d="M \${pStart.x}
+\${pStart.y} A \${r} \${r} 0 0 \${sweepFlag} \${pEnd.x} \${pEnd.y}"
+fill="none" stroke="none" />\`;
+
+}
+}
+// --- HOVEDGENERATOR ---
+function generateWheel() {
+let svgStr = \`<svg viewBox="0 0 1000 1000"
+
+xmlns="http://www.w3.org/2000/svg">\`;
+let defsStr = \`<defs>\`;
+let slicesStr = \`\`;
+let labelsStr = \`\`;
+let currentAngle = 180; // Starter kl 9:00 (Venstre
+
+side)
+
+// Loop gjennom hovedkategoriene
+data.forEach((mainCat, catIndex) => {
+let catStartAngle = currentAngle;
+// 1. Tegn sub-kategorier (Ring 2)
+mainCat.slices.forEach((slice, sliceIndex) => {
+let endAngle = currentAngle + sliceAngle;
+let midAngle = (currentAngle + endAngle) / 2;
+let textRadius = (R_RING1 + R_RING2) / 2;
+let textPos = getCoords(CX, CY, textRadius,
+
+midAngle);
+
+// Setter opp lenken (åpner i ny fane for å
+
+fungere i Google Sites)
+
+let sliceUrl = slice.link !== "DIN_LINK_HER" ?
+
+slice.link : "#";
+
+// Selve kakestykket pakket inn i en a-tag
+
+slicesStr += \`<a href="\${sliceUrl}"
+
+target="_blank">
+
+<path class="interactive-slice"
+d="\${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle,
+endAngle)}" fill="\${slice.color}" stroke="white" stroke-width="2">
+<title>\${slice.label.replace(/\\|/g, '
+
+')}</title>
+
+</path>
+</a>\`;
+// Tekst for sub-kategori (roteres radielt og
+
+sentreres perfekt for å unngå overlapp)
+let textRot = midAngle;
+// Snu teksten hvis den er på venstre side slik
+
+at den alltid er lesbar
+
+let normMid = ((midAngle % 360) + 360) % 360;
+if (normMid > 90 && normMid < 270) {
+textRot += 180;
+}
+// Håndter linjeskift for lange ord
+let lines = slice.label.split('|');
+let textSvg = \`<text class="radial-text"
+transform="rotate(\${textRot}, \${textPos.x}, \${textPos.y})"
+text-anchor="middle">\`;
+
+lines.forEach((line, i) => {
+let yOffset = (i - (lines.length-1)/2) * 16
+
++ 5; // 16px linjeavstand + 5px for å sentrere stabilt uten
+alignment-baseline
+
+textSvg += \`<tspan x="\${textPos.x}"
+y="\${textPos.y}" dy="\${yOffset}">\${line}</tspan>\`;
+
+});
+textSvg += \`</text>\`;
+labelsStr += textSvg;
+currentAngle = endAngle;
+});
+let catEndAngle = currentAngle;
+// Beregn om vi er på øvre eller nedre halvdel for
+
+å plassere teksten i riktig lese-rekkefølge
+
+let midCatAngle = (catStartAngle + catEndAngle) /
+
+2;
+
+let normCatMid = ((midCatAngle % 360) + 360) % 360;
+let isTopHalf = normCatMid > 180 && normCatMid <
+
+360;
+
+// På øvre halvdel må Tittel ha større radius enn
+
+Beskrivelse for å ligge "øverst".
+
+// På nedre halvdel er det omvendt.
+let titleRadius = isTopHalf ? 415 : 355;
+let descRadius = isTopHalf ? 355 : 415;
+// 2. Tegn Hovedkategori og Beskrivelse i samme
+
+ytterste ring (Ring 3)
+
+let mainUrl = mainCat.link !== "DIN_LINK_HER" ?
+
+mainCat.link : "#";
+
+slicesStr += \`<a href="\${mainUrl}"
+
+target="_blank">
+
+<path class="interactive-slice"
+
+d="\${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle,
+catEndAngle)}" fill="\${mainCat.colorMain}" stroke="white"
+stroke-width="3">
+
+<title>\${mainCat.mainLabel}</title>
+</path>
+</a>\`;
+// Tittel-tekst (plassert basert på posisjon i
+
+sirkelen)
+
+let pathIdMain = \`path_main_\${catIndex}\`;
+defsStr += createTextPath(pathIdMain, CX, CY,
+
+titleRadius, catStartAngle, catEndAngle);
+
+labelsStr += \`<text class="arc-text-title"
+dy="0.35em"><textPath href="#\${pathIdMain}" startOffset="50%"
+text-anchor="middle">\${mainCat.mainLabel}</textPath></text>\`;
+// Beskrivelses-tekst (plassert basert på posisjon
+
+i sirkelen)
+
+let pathIdDesc = \`path_desc_\${catIndex}\`;
+defsStr += createTextPath(pathIdDesc, CX, CY,
+
+descRadius, catStartAngle, catEndAngle);
+
+labelsStr += \`<text class="arc-text-desc"
+dy="0.35em"><textPath href="#\${pathIdDesc}" startOffset="50%"
+text-anchor="middle">\${mainCat.descLabel}</textPath></text>\`;
+
+});
+// --- DE INDRE DELENE ---
+// Tegner Ring 1 (Den hvite sirkelen) som én felles,
+
+sammenhengende sirkel
+
+slicesStr += \`<circle cx="\${CX}" cy="\${CY}"
+
+r="\${R_RING1}" fill="white" stroke="#333"
+stroke-width="2"></circle>\`;
+
+// De fire hvite seksjonene med roterte senter-vinkler
+
+for å sentrere "Valg" nøyaktig i midten nede
+
+let innerSections = [
+{ label: "Inkludering", start: 225.0, end: 315.0 },
+
+// Senter 270.0° (Eksakt på toppen)
+
+{ label: "Ikke-ubehagelig", start: 321.5, end:
+
+411.5 }, // Senter 6.5° (366.5°)
+
+{ label: "Valg", start: 45.0, end: 135.0 },
+
+// Senter 90.0° (Eksakt på bunnen)
+
+{ label: "Kommunikasjon", start: 128.6, end: 218.6
+
+} // Senter 173.6°
+
+];
+innerSections.forEach((sec, i) => {
+let pathIdInner = \`path_inner_\${i}\`;
+// Fjerner +4 radius-justering og stoler på
+
+dy="0.35em" for perfekt sentrering
+
+defsStr += createTextPath(pathIdInner, CX, CY,
+
+(R_CENTER + R_RING1)/2, sec.start, sec.end);
+
+labelsStr += \`<text class="inner-ring-text"
+dy="0.35em"><textPath href="#\${pathIdInner}" startOffset="50%"
+text-anchor="middle">\${sec.label}</textPath></text>\`;
+
+});
+// Legger til '=' tegnet på eksakt beregnede vinkler
+
+for å fylle tomrommet perfekt
+
+let eqAngles = [59.6, 120.4, 226.6, 313.4];
+eqAngles.forEach(angle => {
+let eqRadius = (R_CENTER + R_RING1)/2;
+let eqPos = getCoords(CX, CY, eqRadius, angle);
+let eqRot = angle + 90; // Roterer tegnet slik at
+
+det følger sirkelbuen
+
+// Tegner erlik-tegnet manuelt med vektorgrafikk
+(linjer) i stedet for tekst for å fjerne nettleser-feilen helt
+labelsStr += \`<g transform="translate(\${eqPos.x},
+
+\${eqPos.y}) rotate(\${eqRot})" pointer-events="none">
+<line x1="-8" y1="-3" x2="8" y2="-3"
+stroke="black" stroke-width="2.5" stroke-linecap="round" />
+<line x1="-8" y1="3" x2="8" y2="3"
+stroke="black" stroke-width="2.5" stroke-linecap="round" />
+
+</g>\`;
+});
+// Senter (Sort sirkel med Person)
+slicesStr += \`<circle cx="\${CX}" cy="\${CY}"
+
+r="\${R_CENTER}" fill="black" stroke="#333"
+stroke-width="2"></circle>\`;
+
+// Simpelt Ikon for Person Sentrert
+slicesStr += \`
+<circle cx="\${CX}" cy="\${CY - 15}" r="14"
+
+fill="white" />
+
+<path d="M \${CX-30} \${CY+5} Q \${CX} \${CY-15}
+\${CX+30} \${CY+5} L \${CX+20} \${CY+15} Q \${CX} \${CY} \${CX-20}
+\${CY+15} Z" fill="white"/>
+
+<rect x="\${CX-15}" y="\${CY-2}" width="30"
+
+height="35" rx="8" fill="white" />
+
+\`;
+labelsStr += \`<text x="\${CX}" y="\${CY+45}"
+
+fill="white" font-size="12" font-weight="bold"
+text-anchor="middle">Person</text>\`;
+
+labelsStr += \`<text x="\${CX}" y="\${CY+58}"
+
+fill="white" font-size="12" font-weight="bold"
+text-anchor="middle">sentrert</text>\`;
+
+// GLASSKJOLD: En usynlig sirkel helt på toppen for å
+
+sperre alt i midten fra å reagere på musen
+
+labelsStr += \`<circle cx="\${CX}" cy="\${CY}"
+r="\${R_RING1}" fill="transparent" cursor="default"
+style="pointer-events: all;"></circle>\`;
+defsStr += \`</defs>\`;
+svgStr += defsStr + slicesStr + labelsStr + \`</svg>\`;
+document.getElementById('wheel-container').innerHTML =
+
+svgStr;
+}
+// Start genereringen når siden lastes
+window.onload = generateWheel;
+</script>
+</body>
+</html>
