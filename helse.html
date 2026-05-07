@@ -5,84 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helse - Det Optimale Livshjulet</title>
     <style>
-        /* Grunnleggende stil som matcher hovedsiden */
+        /* Grunnleggende stil */
         body {
-            margin: 0; 
-            padding: 20px;
-            background-color: #f4f7f6; /* Samme bakgrunn som hjulet */
+            margin: 0; padding: 20px;
+            background-color: #f4f7f6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            display: flex;
-            justify-content: center;
+            color: #333; display: flex; justify-content: center;
         }
 
-        /* Den hvite innholdsboksen (Kortet) */
+        /* Hovedkortet */
         .container {
-            max-width: 800px;
-            width: 100%;
-            background: white;
-            padding: 40px;
+            max-width: 900px; width: 100%;
+            background: white; padding: 40px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: 40px;
-            margin-bottom: 40px;
+            margin-top: 40px; margin-bottom: 40px;
         }
 
-        /* Overskrifter og tekst */
-        h1 {
-            color: #727679; /* Fargen til Helse-kategorien fra hjulet */
-            font-size: 2.8em;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-        
-        h2 { 
-            color: #555; 
-            margin-top: 30px;
-        }
+        /* Tekststiler */
+        h1 { color: #727679; font-size: 2.8em; margin: 0 0 10px 0; }
+        h2 { color: #555; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;}
+        p { line-height: 1.7; font-size: 1.15em; margin-bottom: 20px; }
 
-        p {
-            line-height: 1.7;
-            font-size: 1.15em;
-            margin-bottom: 20px;
-        }
-
-        /* En fin venstre-kant for å fremheve hovedbudskapet */
+        /* BYGGEKLOSS 1: Intro-boks (Venstre-strek) */
         .intro-box {
             border-left: 6px solid #727679;
-            padding-left: 20px;
-            margin-bottom: 40px;
-            background-color: #fcfcfc;
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding-left: 20px; margin-bottom: 40px;
+            background-color: #fcfcfc; padding-top: 10px; padding-bottom: 10px;
             border-radius: 0 8px 8px 0;
         }
 
-        /* Tilbake-knappen din */
-        .back-btn {
-            background-color: #F18E1C;
-            color: #17244D;
-            padding: 12px 35px;
-            font-size: 20px;
-            font-weight: 900;
-            border-radius: 80px;
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.2s, filter 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-            font-family: 'Arial Black', 'Segoe UI Black', sans-serif;
+        /* BYGGEKLOSS 2: To kolonner (Tekst og Bilde side om side) */
+        .two-columns {
+            display: flex;
+            gap: 30px; /* Avstand mellom kolonnene */
+            align-items: center; /* Sentrerer innholdet vertikalt */
+            margin-bottom: 30px;
+        }
+        .text-column { flex: 1; } /* Tar 50% av plassen */
+        .image-column { flex: 1; } /* Tar 50% av plassen */
+
+        /* Hvordan et bilde oppfører seg */
+        .styled-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .back-btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+        /* Plassholder for bilde (til du har et ekte bilde) */
+        .image-placeholder {
+            width: 100%; height: 250px;
+            background-color: #e0e5e3;
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            color: #727679; font-weight: bold; font-size: 1.2em;
+            border: 2px dashed #b5b7b9;
         }
+
+        /* BYGGEKLOSS 3: Fremhevet info-kort (f.eks til tips eller advarsler) */
+        .info-card {
+            background-color: #e8f4f8; /* Lys blå */
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid #bce0ed;
+        }
+        .info-card h3 { margin-top: 0; color: #00747A; }
+
+        /* Tilbake-knappen */
+        .back-btn {
+            background-color: #F18E1C; color: #17244D;
+            padding: 12px 35px; font-size: 20px; font-weight: 900;
+            border-radius: 80px; text-decoration: none; display: inline-block;
+            transition: transform 0.2s, filter 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 40px; font-family: 'Arial Black', 'Segoe UI Black', sans-serif;
+        }
+        .back-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
         
-        /* Gjør at boksen ser bra ut på mobiltelefoner */
-        @media (max-width: 600px) {
-            .container { padding: 20px; margin-top: 10px; }
+        /* Gjør at alt ser bra ut på mobil (legger kolonnene under hverandre i stedet for side om side) */
+        @media (max-width: 768px) {
+            .container { padding: 25px; margin-top: 10px; }
             h1 { font-size: 2.2em; }
+            .two-columns { flex-direction: column; } /* Tvinger kolonner under hverandre på mobil */
         }
     </style>
 </head>
@@ -90,26 +94,48 @@
 
     <div class="container">
         
-        <!-- Tilbakeknappen som peker rett til filen for hovedhjulet -->
         <a href="index.html" class="back-btn">Tilbake</a>
 
         <h1>Helse</h1>
         
+        <!-- INTRO-BOKSEN -->
         <div class="intro-box">
-            <h2>Best mulig helse for meg</h2>
-            <p>Dette er introduksjonen til Helse-kategorien. Her kan du legge inn en overordnet beskrivelse av hva denne delen av hjulet handler om.</p>
+            <h2 style="margin-top: 0; border: none;">Best mulig helse for meg</h2>
+            <p>Her er en kort introduksjon til helsedelen. Legg merke til den stilige grå kanten til venstre.</p>
         </div>
 
-        <h2>Fysisk aktivitet</h2>
-        <p>Her er et eksempel på et vanlig avsnitt. Hvis du vil ha mer tekst her, legger du bare inn flere avsnitt etter hverandre. Nettleseren vil automatisk tilpasse høyden på siden din slik at det alltid ser pent ut.</p>
-
-        <h2>Kosthold og rutiner</h2>
-        <p>Du kan også veldig enkelt be meg (AI-en) om å lage lister for deg senere, eller kanskje sette inn et bilde under dette avsnittet hvis du trenger det!</p>
+        <h2>Fysisk aktivitet (Eksempel på tekst og bilde side om side)</h2>
         
-        <ul>
-            <li>Eksempel på et punkt</li>
-            <li>Eksempel på enda et punkt</li>
-        </ul>
+        <!-- TO KOLONNER (Tekst + Bilde) -->
+        <div class="two-columns">
+            <div class="text-column">
+                <p>Når vi bruker kolonner, kan vi få teksten til å flyte pent ved siden av et bilde. Dette ser veldig profesjonelt ut på PC.</p>
+                <p>Når brukeren åpner dette på en mobiltelefon, vil koden vår automatisk flytte bildet ned *under* teksten, slik at ingenting blir for smått!</p>
+            </div>
+            <div class="image-column">
+                <!-- Slik ser koden for et ekte bilde ut: <img src="ditt-bilde.jpg" class="styled-image"> -->
+                <div class="image-placeholder">
+                    [Bilde av en treningsøkt]
+                </div>
+            </div>
+        </div>
+
+        <h2>Viktige rutiner (Eksempel på uthevet boks)</h2>
+        
+        <p>Noen ganger har du kanskje noen tips eller en sjekkliste som du vil at personalet virkelig skal legge merke til. Da kan vi bruke et "Info-kort".</p>
+
+        <!-- INFO-KORTET -->
+        <div class="info-card">
+            <h3>💡 Tips til personalet</h3>
+            <ul>
+                <li>Husk å alltid spørre brukeren hva de ønsker å gjøre i dag.</li>
+                <li>Drikk vann regelmessig gjennom hele aktiviteten.</li>
+                <li>Tilrettelegg utstyr på forhånd.</li>
+            </ul>
+        </div>
+
+        <h2>Bare ren tekst</h2>
+        <p>Og hvis du bare vil ha ren tekst, skriver vi bare som normalt. Nettleseren sørger for at det aldri blir for bredt og ubehagelig å lese.</p>
 
     </div>
 
