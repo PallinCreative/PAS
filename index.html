@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Det Optimale Livshjulet</title>
     <style>
-        /* CSS for å få siden til å se proff ut som en egen nettside */
         body {
             margin: 0;
             padding: 0;
@@ -13,16 +12,17 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f4f7f6; /* En veldig lys grå/grønn farge som er behagelig */
+            background-color: #f4f7f6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
 
         #wheel-container {
-            width: 95vw; /* Bruker nesten hele skjermbredden på mobil */
-            max-width: 850px; /* Begrenser størrelsen på store skjermer */
+            width: 95vw;
+            max-width: 850px;
             height: auto;
             aspect-ratio: 1 / 1;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15)); /* Finere skygge enn box-shadow på sirkler */
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.12));
             background-color: transparent;
         }
 
@@ -32,32 +32,33 @@
             display: block;
         }
 
-        /* Forhindrer markering av tekst */
-        svg text {
+        /* All tekst skal ignorere musen fullstendig for å ikke blokkere hover på stykkene under */
+        svg text, svg tspan, textPath {
             user-select: none;
             -webkit-user-select: none;
-            text-rendering: geometricPrecision;
-            cursor: default;
+            pointer-events: none;
+            text-rendering: optimizeLegibility;
         }
 
-        /* Interaktive kakestykker */
         .interactive-slice {
             cursor: pointer;
-            filter: brightness(1);
-            transition: filter 0.2s ease, stroke-width 0.2s ease;
+            transition: filter 0.15s ease-out, stroke 0.15s ease-out;
+            stroke: white;
+            stroke-width: 2px;
         }
 
+        /* Hover-effekt kun på selve kakestykket */
         .interactive-slice:hover {
-            filter: brightness(1.1);
-            stroke: #fff;
-            stroke-width: 4px;
+            filter: brightness(1.15);
+            stroke: #ffffff;
+            stroke-width: 3px;
         }
 
-        /* Tekststiler */
-        .radial-text { pointer-events: none; font-size: 14px; font-weight: 800; fill: #000; }
-        .arc-text-title { pointer-events: none; font-size: 20px; font-weight: bold; fill: white; }
-        .arc-text-desc { pointer-events: none; font-size: 13px; fill: white; }
-        .inner-ring-text { pointer-events: none; font-size: 16px; font-weight: 900; fill: #000; letter-spacing: 0.5px; }
+        /* Tekststiler - Statiske størrelser */
+        .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
+        .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
+        .arc-text-desc { font-size: 13px; fill: white; }
+        .inner-ring-text { font-size: 16px; font-weight: 900; fill: #000; letter-spacing: 0.5px; }
 
     </style>
 </head>
@@ -66,8 +67,6 @@
     <div id="wheel-container"></div>
 
     <script>
-        // --- DIN KONFIGURASJON ---
-        // Nå peker lenkene til lokale HTML-filer som vi skal opprette på GitHub.
         const data = [
             {
                 id: "relasjoner",
@@ -129,7 +128,6 @@
             }
         ];
 
-        // --- MATEMATIKK OG TEGNING (IKKE ENDRE MED MINDRE DU MÅ) ---
         const CX = 500, CY = 500, R_CENTER = 70, R_RING1 = 120, R_RING2 = 310, R_RING3 = 460;
         const totalSlices = 13;
         const sliceAngle = 360 / totalSlices;
@@ -140,8 +138,10 @@
         }
 
         function createSlicePath(cx, cy, rIn, rOut, startAngle, endAngle) {
-            let p1 = getCoords(cx, cy, rIn, startAngle), p2 = getCoords(cx, cy, rOut, startAngle);
-            let p3 = getCoords(cx, cy, rOut, endAngle), p4 = getCoords(cx, cy, rIn, endAngle);
+            let p1 = getCoords(cx, cy, rIn, startAngle);
+            let p2 = getCoords(cx, cy, rOut, startAngle);
+            let p3 = getCoords(cx, cy, rOut, endAngle);
+            let p4 = getCoords(cx, cy, rIn, endAngle);
             let largeArc = endAngle - startAngle <= 180 ? "0" : "1";
             return `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y} A ${rOut} ${rOut} 0 ${largeArc} 1 ${p3.x} ${p3.y} L ${p4.x} ${p4.y} A ${rIn} ${rIn} 0 ${largeArc} 0 ${p1.x} ${p1.y} Z`;
         }
@@ -170,10 +170,9 @@
                     let textRadius = (R_RING1 + R_RING2) / 2;
                     let textPos = getCoords(CX, CY, textRadius, midAngle);
                     
-                    // LAG LENKE: Setter lenken til å åpne i samme fane med JavaScript
                     let onClickAction = (slice.link && slice.link !== "DIN_LINK_HER") ? `onclick="window.location.href='${slice.link}'"` : "";
 
-                    slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" stroke="white" stroke-width="2" ${onClickAction}>
+                    slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" ${onClickAction}>
                             <title>${slice.label.replace(/\|/g, ' ')}</title>
                         </path>`;
 
@@ -197,7 +196,7 @@
 
                 let mainOnClick = (mainCat.link && mainCat.link !== "DIN_LINK_HER") ? `onclick="window.location.href='${mainCat.link}'"` : "";
                 
-                slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" stroke="white" stroke-width="3" ${mainOnClick}>
+                slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" stroke-width="3" ${mainOnClick}>
                         <title>${mainCat.mainLabel}</title></path>`;
 
                 let pathIdMain = `path_main_${catIndex}`;
@@ -209,7 +208,6 @@
                 labelsStr += `<text class="arc-text-desc" dy="0.35em"><textPath href="#${pathIdDesc}" startOffset="50%" text-anchor="middle">${mainCat.descLabel}</textPath></text>`;
             });
 
-            // Indre sirkel
             slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_RING1}" fill="white" stroke="#333" stroke-width="2"></circle>`;
             let innerSections = [
                 { label: "Inkludering", start: 225, end: 315 }, { label: "Ikke-ubehagelig", start: 321.5, end: 411.5 },
@@ -222,7 +220,6 @@
                 labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pathIdInner}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
             });
 
-            // Likhetstegn (=)
             let eqAngles = [59.6, 120.4, 226.6, 313.4];
             eqAngles.forEach(angle => {
                 let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, angle);
@@ -236,8 +233,7 @@
                 <path d="M ${CX-30} ${CY+5} Q ${CX} ${CY-15} ${CX+30} ${CY+5} L ${CX+20} ${CY+15} Q ${CX} ${CY} ${CX-20} ${CY+15} Z" fill="white"/>
                 <rect x="${CX-15}" y="${CY-2}" width="30" height="35" rx="8" fill="white" />`;
             labelsStr += `<text x="${CX}" y="${CY+45}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">Person</text>
-                <text x="${CX}" y="${CY+58}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">sentrert</text>
-                <circle cx="${CX}" cy="${CY}" r="${R_RING1}" fill="transparent" style="pointer-events: none;"></circle>`;
+                <text x="${CX}" y="${CY+58}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">sentrert</text>`;
 
             document.getElementById('wheel-container').innerHTML = svgStr + `</defs>` + slicesStr + labelsStr + `</svg>`;
         }
