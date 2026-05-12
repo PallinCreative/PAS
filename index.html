@@ -97,24 +97,18 @@
         footer {
             background-color: #ffffff;
             border-top: 1px solid #e2e8f0;
-            padding: 4rem 3rem; /* Økt padding for høyere footer */
+            padding: 4rem 3rem;
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
             align-items: center;
             gap: 3rem;
         }
 
-        .footer-logo-placeholder {
-            width: 200px;
-            height: 80px;
-            background-color: #f1f5f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 12px;
-            color: #94a3b8;
-            font-size: 12px;
-            border: 2px dashed #cbd5e1;
+        .footer-logo-container img {
+            height: 160px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
         }
 
         .footer-center {
@@ -125,7 +119,7 @@
 
         .footer-center h2 {
             margin: 0 0 1rem 0;
-            font-size: 1.4rem; /* Større tittel */
+            font-size: 1.4rem;
             color: #1e293b;
             font-weight: 800;
             line-height: 1.2;
@@ -133,7 +127,7 @@
 
         .footer-center p {
             margin: 0;
-            font-size: 1.05rem; /* Litt større brødtekst */
+            font-size: 1.05rem;
             line-height: 1.6;
             color: #475569;
         }
@@ -147,21 +141,13 @@
             display: inline-block;
         }
 
-        .footer-right img {
-            height: 160px; /* Økt fra 100px til 160px for mer synlighet */
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
-        }
-
         @media (max-width: 1024px) {
             footer {
                 grid-template-columns: 1fr;
                 text-align: center;
                 padding: 3rem 1.5rem;
             }
-            .footer-logo-placeholder { margin: 0 auto; }
-            .footer-right { display: flex; justify-content: center; }
+            .footer-logo-container { display: flex; justify-content: center; }
         }
     </style>
 </head>
@@ -179,10 +165,10 @@
     </main>
 
     <footer>
-        <div class="footer-left">
-            <div class="footer-logo-placeholder">
-                <span>LOGO VENSTRE</span>
-            </div>
+        <div class="footer-left footer-logo-container">
+            <img src="PAS Aktivit med i eget liv logo.png" 
+                 alt="PAS Aktivitet logo" 
+                 onerror="this.src='https://placehold.co/200x160/f1f5f9/64748b?text=Aktivit+Logo'">
         </div>
 
         <div class="footer-center">
@@ -191,7 +177,7 @@
             <p class="editor-line">Ansvarlig redaktør: [Navn på redaktør]</p>
         </div>
 
-        <div class="footer-right flex justify-end">
+        <div class="footer-right footer-logo-container flex justify-end">
             <img src="Kommunevåpen Farge Google Site.png" 
                  alt="Trondheim kommune logo" 
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Trondheim_komm_kommunevaapen.svg/200px-Trondheim_komm_kommunevaapen.svg.png'">
