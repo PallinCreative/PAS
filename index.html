@@ -3,27 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Det Optimale Livshjulet</title>
+    <title>Det Optimale Livshjulet - Trondheim kommune</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
             background-color: #f4f7f6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+        }
+
+        /* Navigasjonslinje på toppen */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background-color: #00509e; /* Trondheim-blå nyanse */
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+            margin-right: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: #1e293b;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Hovedinnhold med hjulet */
+        #main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         #wheel-container {
-            width: 95vw;
-            max-width: 850px;
-            height: auto;
+            width: 100%;
+            max-width: 800px;
             aspect-ratio: 1 / 1;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.12));
-            background-color: transparent;
         }
 
         svg {
@@ -32,7 +69,6 @@
             display: block;
         }
 
-        /* All tekst skal ignorere musen fullstendig for å ikke blokkere hover på stykkene under */
         svg text, svg tspan, textPath {
             user-select: none;
             -webkit-user-select: none;
@@ -47,24 +83,117 @@
             stroke-width: 2px;
         }
 
-        /* Hover-effekt kun på selve kakestykket */
         .interactive-slice:hover {
             filter: brightness(1.15);
             stroke: #ffffff;
             stroke-width: 3px;
         }
 
-        /* Tekststiler - Statiske størrelser */
         .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
         .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
         .arc-text-desc { font-size: 13px; fill: white; }
         .inner-ring-text { font-size: 16px; font-weight: 900; fill: #000; letter-spacing: 0.5px; }
 
+        /* Bunntekst layout */
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-logo-placeholder {
+            width: 150px;
+            height: 60px;
+            background-color: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 12px;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .footer-center {
+            flex: 1;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .footer-center h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .footer-center p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .editor-line {
+            margin-top: 12px !important;
+            font-weight: 600;
+            color: #64748b !important;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            .footer-logo-placeholder {
+                order: 2;
+                width: 120px;
+            }
+            .footer-center {
+                order: 1;
+            }
+            header {
+                padding: 15px 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div id="wheel-container"></div>
+    <header>
+        <div class="header-logo-placeholder">
+            <span>LOGO</span>
+        </div>
+        <h1>Det optimale livshjulet</h1>
+    </header>
+
+    <main id="main-content">
+        <div id="wheel-container"></div>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <div class="footer-logo-placeholder">
+                <span>LOGO VENSTRE</span>
+            </div>
+        </div>
+
+        <div class="footer-center">
+            <h2>Positiv adferdsstøtte i Trondheim kommune</h2>
+            <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og Helse- og omsorgstjenesten for barn og unge (HABU)</p>
+            <p class="editor-line">Ansvarlig redaktør: [Navn på redaktør]</p>
+        </div>
+
+        <div class="footer-right">
+            <!-- Her settes kommunevåpenet inn -->
+            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim kommune logo" style="height: 80px; width: auto; object-fit: contain;" onerror="this.src='https://placehold.co/80x80/00509e/ffffff?text=Logo+Trondheim'">
+        </div>
+    </footer>
 
     <script>
         const data = [
