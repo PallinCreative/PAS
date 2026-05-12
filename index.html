@@ -1,15 +1,32 @@
-<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Det Optimale Livshjulet</title>
     <style>
-/* ... existing code ... */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Navigatorlinje på toppen */
         header {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
-            padding: 0.75rem 2.5rem;
+            padding: 0.75rem 2rem;
             display: flex;
-            justify-content: space-between; /* Endret for å gi plass til søk til høyre */
+            justify-content: space-between;
             align-items: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            z-index: 50; /* Økt z-index for at søkeresultater skal ligge over hjulet */
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-left {
@@ -17,6 +34,20 @@
             align-items: center;
         }
 
+        .header-logo {
+            height: 40px;
+            width: auto;
+            margin-right: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        /* Søkefelt */
         .search-container {
             position: relative;
             width: 250px;
@@ -29,15 +60,14 @@
             border: 1px solid #e2e8f0;
             background-color: #f8fafc;
             font-size: 14px;
-            transition: all 0.2s;
             outline: none;
+            transition: all 0.2s;
         }
 
         #search-input:focus {
             border-color: #00509e;
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(0, 80, 158, 0.1);
-            width: 300px; /* Utvider seg litt ved fokus */
         }
 
         .search-icon {
@@ -57,39 +87,91 @@
             background: white;
             border-radius: 12px;
             margin-top: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             max-height: 300px;
             overflow-y: auto;
             display: none;
             border: 1px solid #e2e8f0;
+            z-index: 200; /* Sørger for at resultatene ligger over alt annet */
         }
 
         .search-result-item {
             padding: 10px 15px;
             cursor: pointer;
             border-bottom: 1px solid #f1f5f9;
-            transition: background 0.2s;
         }
 
-        .search-result-item:last-child { border-bottom: none; }
         .search-result-item:hover { background-color: #f8fafc; }
         .search-result-title { font-weight: 600; color: #1e293b; font-size: 13px; }
         .search-result-cat { font-size: 11px; color: #64748b; }
 
-/* ... existing code ... */
+        /* Hovedinnhold med hjulet */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        #wheel-container {
+            width: 95vw;
+            max-width: 750px;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.12));
+        }
+
+        svg { width: 100%; height: 100%; display: block; }
+        svg text, svg tspan, textPath { 
+            user-select: none; 
+            -webkit-user-select: none; 
+            pointer-events: none; 
+        }
+
+        .interactive-slice {
+            cursor: pointer;
+            transition: filter 0.15s ease-out;
+            stroke: white;
+            stroke-width: 2px;
+        }
+
+        .interactive-slice:hover { filter: brightness(1.15); }
+
+        /* Tekststiler for hjulet */
+        .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
+        .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
+        .arc-text-desc { font-size: 13px; fill: white; }
+        .inner-ring-text { font-size: 16px; font-weight: 900; fill: #000; letter-spacing: 0.5px; }
+
+        /* Bunntekst */
+        footer {
+            background-color: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo { height: 220px; width: auto; }
+        .footer-left { display: flex; justify-content: center; padding-right: 2rem; }
+        .footer-right { display: flex; justify-content: center; }
+        .footer-center { text-align: center; }
+        
+        .footer-center h2 { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: 800; color: #1e293b; }
+        .footer-center p { margin: 0; font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+        .editor-label { margin-top: 10px !important; font-weight: 700; color: #475569 !important; text-transform: uppercase; font-size: 0.7rem !important; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-left">
-            <img src="PAS logo.png" 
-                 alt="PAS Logo" 
-                 class="header-logo" 
-                 onerror="this.src='https://placehold.co/100x45/00509e/ffffff?text=PAS+Logo'">
+            <img src="PAS logo.png" alt="PAS Logo" class="header-logo" onerror="this.src='https://placehold.co/100x40/00509e/ffffff?text=PAS+Logo'">
             <h1>Det optimale livshjulet</h1>
         </div>
-
         <div class="search-container">
             <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -99,9 +181,193 @@
         </div>
     </header>
 
-<!-- ... existing code ... -->
+    <main>
+        <div id="wheel-container"></div>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-logo" onerror="this.src='https://placehold.co/200x220/f8fafc/64748b?text=PAS+Logo'">
+        </div>
+        
+        <div class="footer-center">
+            <h2>Positiv adferdsstøtte i Trondheim kommune</h2>
+            <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
+            <p class="editor-label">Ansvarlig redaktør:</p>
+            <p>[Navn på redaktør]</p>
+        </div>
+
+        <div class="footer-right">
+            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim Kommune Logo" class="footer-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Trondheim_komm_v%C3%A5pen.svg/400px-Trondheim_komm_v%C3%A5pen.svg.png'">
+        </div>
+    </footer>
+
     <script>
-/* ... existing code ... */
+        const data = [
+            {
+                id: "relasjoner",
+                mainLabel: "Mellommenneskelige relasjoner",
+                descLabel: "Hvem liker jeg å være sammen med & hva kan vi finne på sammen",
+                colorMain: "#6A2B86", colorDesc: "#6A2B86",
+                link: "relasjoner.html", 
+                slices: [
+                    { label: "Min familie", color: "#936AB0", link: "familie.html" },
+                    { label: "Mine venner", color: "#A985C1", link: "venner.html" },
+                    { label: "Mine hjelpere", color: "#C4ACD7", link: "hjelpere.html" },
+                    { label: "Lokal-|samfunnet|mitt", color: "#E5DAED", link: "lokalsamfunn.html" }
+                ]
+            },
+            {
+                id: "omgivelser",
+                mainLabel: "Fysiske omgivelser",
+                descLabel: "Steder jeg liker å være & hvordan jeg liker at de skal være",
+                colorMain: "#00747A", colorDesc: "#00747A",
+                link: "omgivelser.html",
+                slices: [
+                    { label: "Hjemmet|mitt", color: "#009FA5", link: "hjemmet.html" },
+                    { label: "Steder|utenfor|hjemmet mitt", color: "#76CDD0", link: "steder-utenfor.html" },
+                    { label: "Personalets|ferdigheter|& kunnskaper", color: "#D5EFEF", link: "personale.html" }
+                ]
+            },
+            {
+                id: "tid",
+                mainLabel: "Meningsfull tid",
+                descLabel: "Ting jeg liker å gjøre & planer for ukene som kommer",
+                colorMain: "#2B5592", colorDesc: "#2B5592",
+                link: "tid.html",
+                slices: [
+                    { label: "Mitt arbeid", color: "#678EC9", link: "arbeid.html" },
+                    { label: "Fritid og|moro", color: "#A2C0E2", link: "fritid.html" },
+                    { label: "Mine|aktiviteter", color: "#D9E8F5", link: "aktiviteter.html" }
+                ]
+            },
+            {
+                id: "utvikling",
+                mainLabel: "Personlig utvikling",
+                descLabel: "Lære nye ferdigheter",
+                colorMain: "#A9225E", colorDesc: "#A9225E",
+                link: "utvikling.html",
+                slices: [
+                    { label: "Kommunikasjons-|ferdigheter", color: "#D97CA4", link: "kommunikasjon.html" },
+                    { label: "Lære nye|ferdigheter", color: "#F2CADB", link: "ferdigheter.html" }
+                ]
+            },
+            {
+                id: "helse",
+                mainLabel: "Helse",
+                descLabel: "Best mulig helse for meg",
+                colorMain: "#727679", colorDesc: "#727679",
+                link: "helse.html",
+                slices: [
+                    { label: "Best mulig|helse", color: "#B5B7B9", link: "helse.html" }
+                ]
+            }
+        ];
+
+        const CX = 500, CY = 500, R_CENTER = 70, R_RING1 = 120, R_RING2 = 310, R_RING3 = 460;
+        const totalSlices = 13;
+        const sliceAngle = 360 / totalSlices;
+
+        function getCoords(cx, cy, r, angleDeg) {
+            let rad = angleDeg * Math.PI / 180;
+            return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+        }
+
+        function createSlicePath(cx, cy, rIn, rOut, startAngle, endAngle) {
+            let p1 = getCoords(cx, cy, rIn, startAngle), p2 = getCoords(cx, cy, rOut, startAngle);
+            let p3 = getCoords(cx, cy, rOut, endAngle), p4 = getCoords(cx, cy, rIn, endAngle);
+            let largeArc = endAngle - startAngle <= 180 ? "0" : "1";
+            return `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y} A ${rOut} ${rOut} 0 ${largeArc} 1 ${p3.x} ${p3.y} L ${p4.x} ${p4.y} A ${rIn} ${rIn} 0 ${largeArc} 0 ${p1.x} ${p1.y} Z`;
+        }
+
+        function createTextPath(id, cx, cy, r, startAngle, endAngle) {
+            let midAngle = (startAngle + endAngle) / 2;
+            let normalizedMid = ((midAngle % 360) + 360) % 360; 
+            let pStart, pEnd, sweepFlag;
+            if (normalizedMid > 180 && normalizedMid < 360) {
+                pStart = getCoords(cx, cy, r, startAngle); pEnd = getCoords(cx, cy, r, endAngle); sweepFlag = 1;
+            } else {
+                pStart = getCoords(cx, cy, r, endAngle); pEnd = getCoords(cx, cy, r, startAngle); sweepFlag = 0;
+            }
+            return `<path id="${id}" d="M ${pStart.x} ${pStart.y} A ${r} ${r} 0 0 ${sweepFlag} ${pEnd.x} ${pEnd.y}" fill="none" />`;
+        }
+
+        function generateWheel() {
+            let svgStr = `<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><defs>`;
+            let slicesStr = "", labelsStr = "", currentAngle = 180;
+
+            data.forEach((mainCat, catIndex) => {
+                let catStartAngle = currentAngle;
+                mainCat.slices.forEach((slice) => {
+                    let endAngle = currentAngle + sliceAngle;
+                    let midAngle = (currentAngle + endAngle) / 2;
+                    let textRadius = (R_RING1 + R_RING2) / 2;
+                    let textPos = getCoords(CX, CY, textRadius, midAngle);
+                    
+                    slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" onclick="window.location.href='${slice.link}'">
+                            <title>${slice.label.replace(/\|/g, ' ')}</title>
+                        </path>`;
+
+                    let textRot = midAngle;
+                    if (((midAngle % 360) + 360) % 360 > 90 && ((midAngle % 360) + 360) % 360 < 270) textRot += 180;
+
+                    let lines = slice.label.split('|');
+                    let textSvg = `<text class="radial-text" transform="rotate(${textRot}, ${textPos.x}, ${textPos.y})" text-anchor="middle">`;
+                    lines.forEach((line, i) => {
+                        let yOffset = (i - (lines.length-1)/2) * 16 + 5;
+                        textSvg += `<tspan x="${textPos.x}" y="${textPos.y}" dy="${yOffset}">${line}</tspan>`;
+                    });
+                    labelsStr += textSvg + `</text>`;
+                    currentAngle = endAngle;
+                });
+
+                let catEndAngle = currentAngle;
+                let midCatAngle = (catStartAngle + catEndAngle) / 2;
+                let isTopHalf = (((midCatAngle % 360) + 360) % 360) > 180 && (((midCatAngle % 360) + 360) % 360) < 360;
+                let titleRadius = isTopHalf ? 415 : 355, descRadius = isTopHalf ? 355 : 415;
+
+                slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" onclick="window.location.href='${mainCat.link}'">
+                        <title>${mainCat.mainLabel}</title></path>`;
+
+                let pathIdMain = `path_main_${catIndex}`;
+                svgStr += createTextPath(pathIdMain, CX, CY, titleRadius, catStartAngle, catEndAngle);
+                labelsStr += `<text class="arc-text-title" dy="0.35em"><textPath href="#${pathIdMain}" startOffset="50%" text-anchor="middle">${mainCat.mainLabel}</textPath></text>`;
+
+                let pathIdDesc = `path_desc_${catIndex}`;
+                svgStr += createTextPath(pathIdDesc, CX, CY, descRadius, catStartAngle, catEndAngle);
+                labelsStr += `<text class="arc-text-desc" dy="0.35em"><textPath href="#${pathIdDesc}" startOffset="50%" text-anchor="middle">${mainCat.descLabel}</textPath></text>`;
+            });
+
+            slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_RING1}" fill="white" stroke="#333" stroke-width="2"></circle>`;
+            let innerSections = [
+                { label: "Inkludering", start: 225, end: 315 }, { label: "Ikke-ubehagelig", start: 321.5, end: 411.5 },
+                { label: "Valg", start: 45, end: 135 }, { label: "Kommunikasjon", start: 128.6, end: 218.6 }
+            ];
+
+            innerSections.forEach((sec, i) => {
+                let pathIdInner = `path_inner_${i}`;
+                svgStr += createTextPath(pathIdInner, CX, CY, (R_CENTER + R_RING1)/2, sec.start, sec.end);
+                labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pathIdInner}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
+            });
+
+            let eqAngles = [59.6, 120.4, 226.6, 313.4];
+            eqAngles.forEach(angle => {
+                let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, angle);
+                labelsStr += `<g transform="translate(${p.x}, ${p.y}) rotate(${angle + 90})" pointer-events="none">
+                    <line x1="-8" y1="-3" x2="8" y2="-3" stroke="black" stroke-width="2.5" stroke-linecap="round" />
+                    <line x1="-8" y1="3" x2="8" y2="3" stroke="black" stroke-width="2.5" stroke-linecap="round" /></g>`;
+            });
+
+            slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_CENTER}" fill="black" stroke="#333" stroke-width="2"></circle>
+                <circle cx="${CX}" cy="${CY - 15}" r="14" fill="white" />
+                <path d="M ${CX-30} ${CY+5} Q ${CX} ${CY-15} ${CX+30} ${CY+5} L ${CX+20} ${CY+15} Q ${CX} ${CY} ${CX-20} ${CY+15} Z" fill="white"/>
+                <rect x="${CX-15}" y="${CY-2}" width="30" height="35" rx="8" fill="white" />`;
+            labelsStr += `<text x="${CX}" y="${CY+45}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">Person</text>
+                <text x="${CX}" y="${CY+58}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">sentrert</text>`;
+
+            document.getElementById('wheel-container').innerHTML = svgStr + `</defs>` + slicesStr + labelsStr + `</svg>`;
+        }
+
         function initSearch() {
             const input = document.getElementById('search-input');
             const results = document.getElementById('search-results');
@@ -115,11 +381,9 @@
 
                 let matches = [];
                 data.forEach(cat => {
-                    // Sjekk hovedkategori
                     if (cat.mainLabel.toLowerCase().includes(term)) {
                         matches.push({ title: cat.mainLabel, cat: 'Hovedkategori', link: cat.link });
                     }
-                    // Sjekk undersider (slices)
                     cat.slices.forEach(slice => {
                         const cleanLabel = slice.label.replace(/\|/g, ' ');
                         if (cleanLabel.toLowerCase().includes(term)) {
@@ -142,7 +406,6 @@
                 }
             });
 
-            // Lukk søk når man klikker utenfor
             document.addEventListener('click', (e) => {
                 if (!input.contains(e.target) && !results.contains(e.target)) {
                     results.style.display = 'none';
