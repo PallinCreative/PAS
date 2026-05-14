@@ -4,419 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Det Optimale Livshjulet</title>
+    <link rel="stylesheet" href="shared-styles.css">
     <style>
-        :root {
-            /* Mørk blåfarge for tekst og detaljer */
-            --trondheim-blue: #003d7a;
-            --bg-light: #f8fafc;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --white: #ffffff;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            /* Tilbake til den profesjonelle blåhvite bakgrunnen */
-            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* Slide-down søkelinje */
-        #search-overlay {
-            position: fixed;
-            top: -120px;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background-color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 4rem;
-            box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1100;
-        }
-
-        #search-overlay.active {
-            top: 0;
-        }
-
-        .search-input-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        #overlay-search-input {
-            width: 100%;
-            border: none;
-            font-size: 28px;
-            color: var(--text-main);
-            outline: none;
-            background: transparent;
-            padding: 15px 0;
-            font-weight: 300;
-        }
-
-        .close-search {
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 24px;
-            background: #f1f5f9;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .close-search:hover {
-            background: #fee2e2;
-            color: #ef4444;
-            transform: rotate(90deg);
-        }
-
-        #overlay-results {
-            position: absolute;
-            top: 100px;
-            left: 0;
-            width: 100%;
-            background: var(--white);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-            max-height: 450px;
-            overflow-y: auto;
-            display: none;
-            border-radius: 0 0 16px 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Navigatorlinje */
-        header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.8rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
-
-        .header-logo {
-            height: 45px;
-            width: auto;
-            margin-right: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: var(--trondheim-blue);
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .search-trigger {
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-
-        .search-trigger:hover {
-            background: #f1f5f9;
-            transform: scale(1.05);
-        }
-
-        .search-trigger img {
-            height: 48px; /* Dobbel størrelse på søkeikonet */
-            width: auto;
-        }
-
-        /* Hovedinnhold */
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 2rem;
-            position: relative;
-        }
-
-        #wheel-container {
-            width: 95vw;
-            max-width: 780px;
-            height: auto;
-            aspect-ratio: 1 / 1;
-            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.15));
-            z-index: 1;
-        }
-
+        /* Lokale stiler kun for hjulet */
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 3rem 2rem; }
+        #wheel-container { width: 95vw; max-width: 780px; aspect-ratio: 1 / 1; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.15)); }
         svg { width: 100%; height: 100%; display: block; }
-        
-        svg text, svg tspan, textPath { 
-            user-select: none; 
-            -webkit-user-select: none; 
-            pointer-events: none; 
-            text-rendering: optimizeLegibility;
-        }
-
-        .interactive-slice {
-            cursor: pointer;
-            transition: filter 0.2s ease, stroke-width 0.2s ease;
-            stroke: white;
-            stroke-width: 2px;
-        }
-
-        .interactive-slice:hover { 
-            filter: brightness(1.12) saturate(1.1);
-            stroke-width: 3px;
-        }
-
+        .interactive-slice { cursor: pointer; transition: filter 0.2s ease; stroke: white; stroke-width: 2px; }
+        .interactive-slice:hover { filter: brightness(1.12) saturate(1.1); stroke-width: 3px; }
         .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
         .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
-        
-        .arc-text-desc { 
-            font-size: 15px; 
-            font-weight: 600; 
-            fill: white; 
-            letter-spacing: 0.4px;
-            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-        }
-        
+        .arc-text-desc { font-size: 15px; font-weight: 600; fill: white; text-shadow: 0px 1px 3px rgba(0,0,0,0.5); }
         .inner-ring-text { font-size: 16px; font-weight: 900; fill: #000; letter-spacing: 0.5px; }
-
-        /* Bunntekst */
-        footer {
-            background-color: #fcfdfe;
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem 3rem;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .footer-logo { 
-            height: 200px; 
-            width: auto; 
-            transition: transform 0.3s ease;
-        }
-        
-        .footer-logo:hover {
-            transform: translateY(-5px);
-        }
-
-        .footer-left { display: flex; justify-content: flex-start; }
-        .footer-right { display: flex; justify-content: flex-end; }
-        .footer-center { 
-            text-align: center; 
-            max-width: 500px;
-        }
-        
-        .footer-center h2 { 
-            margin: 0 0 8px 0; 
-            font-size: 1.15rem; 
-            font-weight: 800; 
-            color: var(--trondheim-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .footer-center p { 
-            margin: 0; 
-            font-size: 0.9rem; 
-            color: var(--text-muted); 
-            line-height: 1.6; 
-            font-weight: 400;
-        }
-
-        .editor-section {
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .editor-label { 
-            font-weight: 700; 
-            color: var(--text-main) !important; 
-            text-transform: uppercase; 
-            font-size: 0.75rem !important; 
-            letter-spacing: 1.5px;
-            margin-bottom: 4px !important;
-        }
-
-        .search-result-item {
-            padding: 1.2rem 4rem;
-            cursor: pointer;
-            border-bottom: 1px solid #f1f5f9;
-            transition: background 0.2s;
-        }
-
-        .search-result-item:hover { 
-            background-color: #f8fafc; 
-        }
-        
-        .search-result-title { 
-            font-weight: 700; 
-            color: var(--trondheim-blue); 
-            font-size: 18px; 
-            margin-bottom: 2px;
-        }
-        
-        .search-result-cat { 
-            font-size: 13px; 
-            color: var(--text-muted); 
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 1024px) {
-            footer {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 1.5rem;
-                padding: 2rem;
-            }
-            .footer-left, .footer-right { justify-content: center; padding: 0; }
-            .footer-logo { height: 150px; }
-            header { padding: 0.8rem 1.5rem; }
-            #search-overlay { padding: 0 1.5rem; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Søkelinje-overlay -->
-    <div id="search-overlay">
-        <div class="search-input-wrapper">
-            <input type="text" id="overlay-search-input" placeholder="Hva leter du etter?" autocomplete="off">
-            <div id="overlay-results"></div>
-        </div>
-        <div class="close-search" id="close-search-btn" title="Lukk søk">✕</div>
-    </div>
-
-    <header>
-        <div class="header-left">
-            <img src="PAS logo.png" alt="PAS Logo" class="header-logo" onerror="this.src='https://placehold.co/100x45/003d7a/ffffff?text=PAS'">
-            <h1>Det optimale livshjulet</h1>
-        </div>
-        <div class="search-trigger" id="search-trigger-btn" title="Åpne søk">
-            <!-- Oppdatert til Søke ikon 2.svg -->
-            <img src="Søke ikon 2.svg" alt="Søk" onerror="this.src='https://img.icons8.com/ios-filled/50/003d7a/search--v1.png'">
-        </div>
-    </header>
+    <div id="pas-header-container"></div>
 
     <main>
         <div id="wheel-container"></div>
     </main>
 
-    <footer>
-        <div class="footer-left">
-            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-logo" onerror="this.src='https://placehold.co/200x200/f8fafc/64748b?text=PAS+Logo'">
-        </div>
-        
-        <div class="footer-center">
-            <!-- Skrivefeil rettet: atferdsstøtte -->
-            <h2>Positiv atferdsstøtte i Trondheim kommune</h2>
-            <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
-            
-            <div class="editor-section">
-                <p class="editor-label">Ansvarlig redaktør</p>
-                <p style="color: var(--text-main); font-weight: 600;">[Navn på redaktør]</p>
-            </div>
-        </div>
+    <div id="pas-footer-container"></div>
 
-        <div class="footer-right">
-            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim Kommune Logo" class="footer-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Trondheim_komm_v%C3%A5pen.svg/400px-Trondheim_komm_v%C3%A5pen.svg.png'">
-        </div>
-    </footer>
-
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+    
     <script>
-        const data = [
-            {
-                id: "relasjoner",
-                mainLabel: "Mellommenneskelige relasjoner",
-                descLabel: "Hvem liker jeg å være sammen med & hva kan vi finne på sammen",
-                colorMain: "#6A2B86", colorDesc: "#6A2B86",
-                link: "relasjoner.html", 
-                slices: [
-                    { label: "Min familie", color: "#936AB0", link: "familie.html" },
-                    { label: "Mine venner", color: "#A985C1", link: "venner.html" },
-                    { label: "Mine hjelpere", color: "#C4ACD7", link: "hjelpere.html" },
-                    { label: "Lokal-|samfunnet|mitt", color: "#E5DAED", link: "lokalsamfunn.html" }
-                ]
-            },
-            {
-                id: "omgivelser",
-                mainLabel: "Fysiske omgivelser",
-                descLabel: "Steder jeg liker å være & hvordan jeg liker at de skal være",
-                colorMain: "#00747A", colorDesc: "#00747A",
-                link: "omgivelser.html",
-                slices: [
-                    { label: "Hjemmet|mitt", color: "#009FA5", link: "hjemmet.html" },
-                    { label: "Steder|utenfor|hjemmet mitt", color: "#76CDD0", link: "steder-utenfor.html" },
-                    { label: "Personalets|ferdigheter|& kunnskaper", color: "#D5EFEF", link: "personale.html" }
-                ]
-            },
-            {
-                id: "tid",
-                mainLabel: "Meningsfull tid",
-                descLabel: "Ting jeg liker å gjøre & planer for ukene som kommer",
-                colorMain: "#2B5592", colorDesc: "#2B5592",
-                link: "tid.html",
-                slices: [
-                    { label: "Mitt arbeid", color: "#678EC9", link: "arbeid.html" },
-                    { label: "Fritid og|moro", color: "#A2C0E2", link: "fritid.html" },
-                    { label: "Mine|aktiviteter", color: "#D9E8F5", link: "aktiviteter.html" }
-                ]
-            },
-            {
-                id: "utvikling",
-                mainLabel: "Personlig utvikling",
-                descLabel: "Lære nye ferdigheter",
-                colorMain: "#A9225E", colorDesc: "#A9225E",
-                link: "utvikling.html",
-                slices: [
-                    { label: "Kommunikasjons-|ferdigheter", color: "#D97CA4", link: "kommunikasjon.html" },
-                    { label: "Lære nye|ferdigheter", color: "#F2CADB", link: "ferdigheter.html" }
-                ]
-            },
-            {
-                id: "helse",
-                mainLabel: "Helse",
-                descLabel: "Best mulig helse for meg",
-                colorMain: "#727679", colorDesc: "#727679",
-                link: "helse.html",
-                slices: [
-                    { label: "Best mulig|helse", color: "#B5B7B9", link: "helse.html" }
-                ]
-            }
-        ];
-
         const CX = 500, CY = 500, R_CENTER = 70, R_RING1 = 120, R_RING2 = 310, R_RING3 = 460;
         const totalSlices = 13;
         const sliceAngle = 360 / totalSlices;
@@ -446,148 +61,63 @@
         }
 
         function generateWheel() {
-            let svgStr = `<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
-                        <feOffset dx="0.5" dy="0.5" result="offsetblur" />
-                        <feComponentTransfer><feFuncA type="linear" slope="0.5" /></feComponentTransfer>
-                        <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
-                    </filter>
-            `;
+            let svgStr = `<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><defs>
+                <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
+                    <feOffset dx="0.5" dy="0.5" result="offsetblur" />
+                    <feComponentTransfer><feFuncA type="linear" slope="0.5" /></feComponentTransfer>
+                    <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>`;
             let slicesStr = "", labelsStr = "", currentAngle = 180;
 
-            data.forEach((mainCat, catIndex) => {
+            PAS_DATA.forEach((mainCat, catIndex) => {
                 let catStartAngle = currentAngle;
                 mainCat.slices.forEach((slice) => {
                     let endAngle = currentAngle + sliceAngle;
                     let midAngle = (currentAngle + endAngle) / 2;
                     let textRadius = (R_RING1 + R_RING2) / 2;
                     let textPos = getCoords(CX, CY, textRadius, midAngle);
-                    
-                    slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" onclick="window.location.href='${slice.link}'">
-                            <title>${slice.label.replace(/\|/g, ' ')}</title>
-                        </path>`;
-
+                    slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING1, R_RING2, currentAngle, endAngle)}" fill="${slice.color}" onclick="window.location.href='${slice.link}'"><title>${slice.label}</title></path>`;
                     let textRot = midAngle;
                     if (((midAngle % 360) + 360) % 360 > 90 && ((midAngle % 360) + 360) % 360 < 270) textRot += 180;
-
                     let lines = slice.label.split('|');
                     let textSvg = `<text class="radial-text" transform="rotate(${textRot}, ${textPos.x}, ${textPos.y})" text-anchor="middle">`;
-                    lines.forEach((line, i) => {
-                        let yOffset = (i - (lines.length-1)/2) * 16 + 5;
-                        textSvg += `<tspan x="${textPos.x}" y="${textPos.y}" dy="${yOffset}">${line}</tspan>`;
-                    });
+                    lines.forEach((line, i) => { textSvg += `<tspan x="${textPos.x}" y="${textPos.y}" dy="${(i - (lines.length-1)/2) * 16 + 5}">${line}</tspan>`; });
                     labelsStr += textSvg + `</text>`;
                     currentAngle = endAngle;
                 });
-
                 let catEndAngle = currentAngle;
                 let midCatAngle = (catStartAngle + catEndAngle) / 2;
                 let isTopHalf = (((midCatAngle % 360) + 360) % 360) > 180 && (((midCatAngle % 360) + 360) % 360) < 360;
                 let titleRadius = isTopHalf ? 415 : 355, descRadius = isTopHalf ? 355 : 415;
-
-                slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" onclick="window.location.href='${mainCat.link}'">
-                        <title>${mainCat.mainLabel}</title></path>`;
-
+                slicesStr += `<path class="interactive-slice" d="${createSlicePath(CX, CY, R_RING2, R_RING3, catStartAngle, catEndAngle)}" fill="${mainCat.colorMain}" onclick="window.location.href='${mainCat.link}'"></path>`;
                 let pathIdMain = `path_main_${catIndex}`;
                 svgStr += createTextPath(pathIdMain, CX, CY, titleRadius, catStartAngle, catEndAngle);
                 labelsStr += `<text class="arc-text-title" dy="0.35em"><textPath href="#${pathIdMain}" startOffset="50%" text-anchor="middle">${mainCat.mainLabel}</textPath></text>`;
-
                 let pathIdDesc = `path_desc_${catIndex}`;
                 svgStr += createTextPath(pathIdDesc, CX, CY, descRadius, catStartAngle, catEndAngle);
                 labelsStr += `<text class="arc-text-desc" dy="0.35em" filter="url(#textShadow)"><textPath href="#${pathIdDesc}" startOffset="50%" text-anchor="middle">${mainCat.descLabel}</textPath></text>`;
             });
 
             slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_RING1}" fill="white" stroke="#333" stroke-width="1.5"></circle>`;
-            let innerSections = [
-                { label: "Inkludering", start: 225, end: 315 }, { label: "Ikke-ubehagelig", start: 321.5, end: 411.5 },
-                { label: "Valg", start: 45, end: 135 }, { label: "Kommunikasjon", start: 128.6, end: 218.6 }
-            ];
-
-            innerSections.forEach((sec, i) => {
-                let pathIdInner = `path_inner_${i}`;
-                svgStr += createTextPath(pathIdInner, CX, CY, (R_CENTER + R_RING1)/2, sec.start, sec.end);
-                labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pathIdInner}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
+            [{label:"Inkludering",s:225,e:315},{label:"Ikke-ubehagelig",s:321.5,e:411.5},{label:"Valg",s:45,e:135},{label:"Kommunikasjon",s:128.6,e:218.6}].forEach((sec, i) => {
+                let pid = `p_in_${i}`;
+                svgStr += createTextPath(pid,CX,CY,(R_CENTER+R_RING1)/2,sec.s,sec.e);
+                labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pid}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
             });
 
-            // Piler
-            let eqAngles = [59.6, 120.4, 226.6, 313.4];
-            eqAngles.forEach(angle => {
-                let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, angle);
-                labelsStr += `<g transform="translate(${p.x}, ${p.y}) rotate(${angle + 90})" pointer-events="none">
-                    <path d="M -10 0 L 8 0" stroke="black" stroke-width="2.5" stroke-linecap="round" fill="none" />
-                    <path d="M 3 -5 L 11 0 L 3 5 Z" fill="black" />
-                </g>`;
+            [59.6, 120.4, 226.6, 313.4].forEach(a => {
+                let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, a);
+                labelsStr += `<g transform="translate(${p.x}, ${p.y}) rotate(${a + 90})"><path d="M-10 0 L8 0" stroke="black" stroke-width="2.5"/><path d="M3 -5 L11 0 L3 5 Z" fill="black"/></g>`;
             });
 
-            slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_CENTER}" fill="black" stroke="#333" stroke-width="2"></circle>
-                <circle cx="${CX}" cy="${CY - 15}" r="14" fill="white" />
-                <path d="M ${CX-30} ${CY+5} Q ${CX} ${CY-15} ${CX+30} ${CY+5} L ${CX+20} ${CY+15} Q ${CX} ${CY} ${CX-20} ${CY+15} Z" fill="white"/>
-                <rect x="${CX-15}" y="${CY-2}" width="30" height="35" rx="8" fill="white" />`;
-            labelsStr += `<text x="${CX}" y="${CY+45}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">Person</text>
-                <text x="${CX}" y="${CY+58}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">sentrert</text>`;
+            slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_CENTER}" fill="black"></circle><circle cx="${CX}" cy="${CY-15}" r="14" fill="white"/><path d="M${CX-30} ${CY+5} Q${CX} ${CY-15} ${CX+30} ${CY+5} L${CX+20} ${CY+15} Q${CX} ${CY} ${CX-20} ${CY+15} Z" fill="white"/><rect x="${CX-15}" y="${CY-2}" width="30" height="35" rx="8" fill="white"/>`;
+            labelsStr += `<text x="${CX}" y="${CY+45}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">Person</text><text x="${CX}" y="${CY+58}" fill="white" font-size="12" font-weight="bold" text-anchor="middle">sentrert</text>`;
 
             document.getElementById('wheel-container').innerHTML = svgStr + `</defs>` + slicesStr + labelsStr + `</svg>`;
         }
 
-        function setupSearch() {
-            const trigger = document.getElementById('search-trigger-btn');
-            const overlay = document.getElementById('search-overlay');
-            const close = document.getElementById('close-search-btn');
-            const input = document.getElementById('overlay-search-input');
-            const results = document.getElementById('overlay-results');
-
-            trigger.onclick = () => {
-                overlay.classList.add('active');
-                setTimeout(() => input.focus(), 400);
-            };
-
-            close.onclick = () => {
-                overlay.classList.remove('active');
-                input.value = '';
-                results.style.display = 'none';
-            };
-
-            input.oninput = (e) => {
-                const term = e.target.value.toLowerCase();
-                if (term.length < 2) {
-                    results.style.display = 'none';
-                    return;
-                }
-
-                let matches = [];
-                data.forEach(cat => {
-                    if (cat.mainLabel.toLowerCase().includes(term)) {
-                        matches.push({ title: cat.mainLabel, cat: 'Hovedområde', link: cat.link });
-                    }
-                    cat.slices.forEach(slice => {
-                        const cleanLabel = slice.label.replace(/\|/g, ' ');
-                        if (cleanLabel.toLowerCase().includes(term)) {
-                            matches.push({ title: cleanLabel, cat: cat.mainLabel, link: slice.link });
-                        }
-                    });
-                });
-
-                if (matches.length > 0) {
-                    results.innerHTML = matches.map(m => `
-                        <div class="search-result-item" onclick="window.location.href='${m.link}'">
-                            <div class="search-result-title">${m.title}</div>
-                            <div class="search-result-cat">${m.cat}</div>
-                        </div>
-                    `).join('');
-                    results.style.display = 'block';
-                } else {
-                    results.innerHTML = '<div class="search-result-item" style="color: var(--text-muted);">Vi fant dessverre ingen treff...</div>';
-                    results.style.display = 'block';
-                }
-            };
-        }
-
-        window.onload = function() {
-            generateWheel();
-            setupSearch();
-        };
+        window.addEventListener('load', generateWheel);
     </script>
 </body>
 </html>
