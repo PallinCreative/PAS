@@ -6,15 +6,13 @@
     <title>Det Optimale Livshjulet</title>
     <style>
         :root {
-            /* Mørkere blåfarge for bedre kontrast og autoritet */
+            /* Mørk blåfarge for tekst og detaljer */
             --trondheim-blue: #003d7a;
             --bg-light: #f8fafc;
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --white: #ffffff;
-            /* En varm oransje farge for bakgrunnsgløden */
-            --pas-orange: rgba(241, 142, 28, 0.08);
         }
 
         body {
@@ -23,7 +21,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #ffffff;
+            /* Tilbake til den profesjonelle blåhvite bakgrunnen */
+            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
@@ -107,7 +106,7 @@
 
         /* Navigatorlinje */
         header {
-            background-color: rgba(255, 255, 255, 0.98);
+            background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             padding: 0.8rem 3rem;
@@ -152,11 +151,11 @@
         }
 
         .search-trigger img {
-            height: 42px;
+            height: 48px; /* Dobbel størrelse på søkeikonet */
             width: auto;
         }
 
-        /* Hovedinnhold med svak oransje glød */
+        /* Hovedinnhold */
         main {
             flex: 1;
             display: flex;
@@ -164,7 +163,6 @@
             align-items: center;
             padding: 3rem 2rem;
             position: relative;
-            background: radial-gradient(circle, var(--pas-orange) 0%, rgba(255,255,255,0) 70%);
         }
 
         #wheel-container {
@@ -512,6 +510,7 @@
                 labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pathIdInner}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
             });
 
+            // Piler
             let eqAngles = [59.6, 120.4, 226.6, 313.4];
             eqAngles.forEach(angle => {
                 let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, angle);
