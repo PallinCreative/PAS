@@ -1,4 +1,4 @@
-/* STREAMING_CHUNK: Globalt designoppsett for stabil layout */
+/* Globalt designoppsett for stabil layout */
 :root {
 --trondheim-blue: #003d7a;
 --bg-light: #f8fafc;
@@ -93,20 +93,18 @@ flex-direction: column;
 
 .footer-col.left {
 flex: 1;
-align-items: flex-start; /* Logo ut fra kanten... /
-padding-left: 10%;      / ...men dytter den 10% innover */
+align-items: center; /* Logo midtstilt i venstre felt */
 }
 
 .footer-col.right {
 flex: 1;
-align-items: flex-end;   /* Logo ut fra kanten... /
-padding-right: 10%;      / ...men dytter den 10% innover */
+align-items: center; /* Logo midtstilt i høyre felt */
 }
 
 .footer-col.center {
-flex: 2;
+flex: 0 0 auto;
 text-align: center;
-min-width: 600px;
+width: 600px; /* Fast bredde som passer teksten */
 }
 
 .footer-img {
@@ -130,10 +128,12 @@ color: var(--text-muted);
 line-height: 1.4;
 }
 
+/* Den smale skillelinjen som fikser problemet /
 .editor-box {
-margin-top: 10px;
-padding-top: 5px;
-border-top: 1px solid #f1f5f9;
+margin: 15px auto 0 auto;
+padding-top: 10px;
+border-top: 1px solid #e2e8f0;
+width: 250px; / Kort linje slik du ønsket */
 }
 
 .editor-tag { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; color: var(--text-muted); }
