@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meningsfull tid - Det Optimale Livshjulet</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge hentet fra hjulet (#2B5592) */
+            --module-color: #2B5592;
+            --module-text: #ffffff;
+            --module-light: #f0f4f9;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--module-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+        }
+
+        .info-box {
+            background-color: var(--module-color);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            color: var(--module-color);
+            font-weight: bold;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasjonslinje -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="index.html" class="back-link">← Tilbake til hjulet</a>
+        
+        <section class="module-header">
+            <h1>Meningsfull tid</h1>
+            <p class="text-muted">Ting jeg liker å gjøre & planer for ukene som kommer.</p>
+        </section>
+
+        <div class="content-card">
+            <h2>Hva gir dagen mening?</h2>
+            <p>I PAS er vi opptatt av at alle skal ha en hverdag fylt med aktiviteter som gir glede, mestring og en følelse av å bidra. Meningsfull tid handler om mer enn bare å få tiden til å gå – det handler om livskvalitet.</p>
+            
+            <ul class="check-list">
+                <li><strong>Forutsigbarhet:</strong> Vite hva som skal skje, når det skal skje og hvem som skal være der.</li>
+                <li><strong>Selvbestemmelse:</strong> Mulighet til å velge aktiviteter ut fra egne interesser.</li>
+                <li><strong>Mestring:</strong> Oppleve at man får til noe, enten det er på jobb eller i fritiden.</li>
+                <li><strong>Struktur:</strong> En balanse mellom aktivitet og nødvendig hvile.</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>Planlegging og oversikt</h2>
+            <p>Gode dagsplaner og ukeplaner er viktige verktøy for å skape trygghet og oversikt i hverdagen.</p>
+            
+            <div class="info-box">
+                <h3>Viktig for personalet:</h3>
+                <p>Sørg for at personens planer alltid er oppdaterte, tilgjengelige og forståelige for hovedpersonen selv. Bruk visuell støtte (bilder, symboler) der det er behov for det.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bunntekst -->
+    <div id="pas-footer-container"></div>
+
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
