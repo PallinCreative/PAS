@@ -4,28 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helse - Det Optimale Livshjulet</title>
+    <!-- Henter felles design -->
     <link rel="stylesheet" href="shared-styles.css">
     <style>
-        main { max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1; }
-        .card { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
-        .back-link { display: inline-flex; align-items: center; color: var(--trondheim-blue); font-weight: 700; text-decoration: none; margin-bottom: 20px; }
-        h1 { color: var(--trondheim-blue); margin-bottom: 20px; }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border-left: 5px solid var(--trondheim-blue);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Her limes navigatorlinjen inn automatisk -->
     <div id="pas-header-container"></div>
 
     <main>
         <a href="index.html" class="back-link">← Tilbake til hjulet</a>
-        <div class="card">
+        
+        <div class="content-card">
             <h1>Helse</h1>
-            <p>Her kommer innholdet for helsemodulen.</p>
+            <p>Helse er en grunnleggende forutsetning for livskvalitet. Innenfor rammeverket for Positiv atferdsstøtte (PAS) ser vi på hvordan vi kan legge til rette for best mulig helse for den enkelte.</p>
+            
+            <div class="info-box">
+                <strong>Husk:</strong> God helse handler ikke bare om fravær av sykdom, men om fysisk, psykisk og sosialt velvære.
+            </div>
+
+            <p>Her vil vi fylle på med mer spesifikt innhold om helseoppfølging, gode rutiner og forebyggende tiltak i Trondheim kommune.</p>
         </div>
     </main>
 
+    <!-- Her limes bunnteksten inn automatisk -->
     <div id="pas-footer-container"></div>
 
+    <!-- Skriptene som gjør magien -->
     <script src="site-data.js"></script>
     <script src="pas-components.js"></script>
 </body>
