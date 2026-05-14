@@ -1,8 +1,6 @@
 /**
- * Denne filen inneholder logikken for å tegne opp Header og Footer
- * på alle sider i PAS-portalen.
+ * STREAMING_CHUNK: Initialiserer opptegning av Header og Footer
  */
-
 document.addEventListener('DOMContentLoaded', () => {
     renderHeader();
     renderFooter();
@@ -86,9 +84,8 @@ function setupSearch() {
         }
 
         let matches = [];
-        // PAS_DATA hentes fra site-data.js
-        if (typeof PAS_DATA !== 'undefined') {
-            PAS_DATA.forEach(cat => {
+        if (typeof data !== 'undefined') {
+            data.forEach(cat => {
                 if (cat.mainLabel.toLowerCase().includes(term)) {
                     matches.push({ title: cat.mainLabel, cat: 'Hovedområde', link: cat.link });
                 }
