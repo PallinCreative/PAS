@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personlig utvikling - Det Optimale Livshjulet</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge hentet fra hjulet (#A9225E) */
+            --module-color: #A9225E;
+            --module-light: #fdf2f7;
+            --module-border: #f4cfdf;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--module-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+        }
+
+        .development-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--module-border);
+            margin-top: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .check-list li:last-child { border-bottom: none; }
+
+        .check-list li::before {
+            content: "🌱";
+            font-size: 1.1rem;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="index.html" class="back-link">← Tilbake til hjulet</a>
+        
+        <section class="module-header">
+            <h1>Personlig utvikling</h1>
+            <p class="text-muted">Mestring, læring og muligheten til å utvikle seg gjennom hele livet.</p>
+        </section>
+
+        <div class="content-card">
+            <h2>Hva innebærer utvikling i PAS?</h2>
+            <p>Personlig utvikling handler om å legge til rette for at den enkelte kan tilegne seg nye ferdigheter som øker livskvaliteten og graden av selvstendighet. I PAS ser vi på utvikling som en kontinuerlig prosess der vi bygger på personens sterke sider.</p>
+            
+            <ul class="check-list">
+                <li><strong>Funksjonelle ferdigheter:</strong> Lære ting som faktisk gjør hverdagen enklere eller mer meningsfull.</li>
+                <li><strong>Kommunikasjon:</strong> Utvikle måter å uttrykke behov, ønsker og følelser på (ASK).</li>
+                <li><strong>Autonomi:</strong> Støtte personen i å ta mer kontroll over egne valg og handlinger.</li>
+                <li><strong>Livslang læring:</strong> Vi blir aldri for gamle til å lære noe nytt eller oppleve mestring.</li>
+            </ul>
+        </div>
+
+        <div class="content-card development-box">
+            <h2>Kartlegging av læringspotensial</h2>
+            <p>For å lykkes med utviklingstiltak må vi vite hvor personen står i dag, og hva som motiverer til læring.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Viktige suksessfaktorer:</strong></p>
+                <ul class="check-list">
+                    <li>Bruk metodikk som <em>positiv forsterkning</em> for å skape motivasjon.</li>
+                    <li>Del opp læringsmål i små, oppnåelige steg (kjeding/shaping).</li>
+                    <li>Sørg for at personalgruppen jobber likt og bruker samme støttemateriell.</li>
+                    <li>Dokumenter små og store fremskritt i journalsystemet.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <div id="pas-footer-container"></div>
+
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
