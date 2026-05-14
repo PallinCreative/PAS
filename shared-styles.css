@@ -1,0 +1,197 @@
+/* STREAMING_CHUNK:Definerer globale variabler og basestiler... */
+:root {
+--trondheim-blue: #003d7a;
+--bg-light: #f8fafc;
+--text-main: #1e293b;
+--text-muted: #64748b;
+--border-color: #e2e8f0;
+--white: #ffffff;
+}
+
+body {
+margin: 0;
+padding: 0;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+color: var(--text-main);
+overflow-x: hidden;
+}
+
+/* STREAMING_CHUNK:Styling for felles header og søke-overlay... */
+header {
+background-color: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid var(--border-color);
+padding: 0.8rem 3rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+
+.header-left {
+display: flex;
+align-items: center;
+}
+
+.header-logo {
+height: 45px;
+width: auto;
+margin-right: 20px;
+}
+
+header h1 {
+margin: 0;
+font-size: 1.4rem;
+color: var(--trondheim-blue);
+font-weight: 800;
+letter-spacing: -0.5px;
+}
+
+.search-trigger {
+cursor: pointer;
+padding: 8px;
+border-radius: 12px;
+transition: all 0.2s;
+}
+
+.search-trigger:hover {
+background: #f1f5f9;
+transform: scale(1.05);
+}
+
+.search-trigger img {
+height: 48px;
+width: auto;
+}
+
+/* STREAMING_CHUNK:Styling for søke-overlay... */
+#search-overlay {
+position: fixed;
+top: -120px;
+left: 0;
+width: 100%;
+height: 100px;
+background-color: var(--white);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 4rem;
+box-sizing: border-box;
+box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+z-index: 1100;
+}
+
+#search-overlay.active {
+top: 0;
+}
+
+.search-input-wrapper {
+flex: 1;
+display: flex;
+align-items: center;
+max-width: 1000px;
+margin: 0 auto;
+position: relative;
+}
+
+#overlay-search-input {
+width: 100%;
+border: none;
+font-size: 28px;
+color: var(--text-main);
+outline: none;
+background: transparent;
+padding: 15px 0;
+font-weight: 300;
+}
+
+.close-search {
+cursor: pointer;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+font-size: 24px;
+background: #f1f5f9;
+color: var(--text-muted);
+transition: all 0.2s;
+}
+
+.close-search:hover {
+background: #fee2e2;
+color: #ef4444;
+transform: rotate(90deg);
+}
+
+#overlay-results {
+position: absolute;
+top: 100px;
+left: 0;
+width: 100%;
+background: var(--white);
+box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+max-height: 450px;
+overflow-y: auto;
+display: none;
+border-radius: 0 0 16px 16px;
+border-top: 1px solid var(--border-color);
+}
+
+/* STREAMING_CHUNK:Styling for felles footer... */
+footer {
+background-color: #fcfdfe;
+border-top: 1px solid var(--border-color);
+padding: 1rem 3rem;
+display: grid;
+grid-template-columns: 1fr auto 1fr;
+align-items: center;
+gap: 3rem;
+}
+
+.footer-logo {
+height: 220px;
+width: auto;
+transition: transform 0.3s ease;
+}
+
+.footer-left { display: flex; justify-content: flex-start; padding-right: 2rem; }
+.footer-right { display: flex; justify-content: flex-end; }
+.footer-center { text-align: center; max-width: 500px; }
+
+.footer-center h2 {
+margin: 0 0 8px 0;
+font-size: 1.15rem;
+font-weight: 800;
+color: var(--trondheim-blue);
+text-transform: uppercase;
+}
+
+.editor-label {
+font-weight: 700;
+color: var(--text-main);
+text-transform: uppercase;
+font-size: 0.75rem;
+letter-spacing: 1.5px;
+margin-top: 15px;
+}
+
+/* STREAMING_CHUNK:Responsivitet... */
+@media (max-width: 1024px) {
+footer {
+grid-template-columns: 1fr;
+text-align: center;
+padding: 2rem;
+}
+.footer-left, .footer-right { justify-content: center; padding: 0; }
+.footer-logo { height: 150px; }
+}
