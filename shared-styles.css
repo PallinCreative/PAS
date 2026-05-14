@@ -122,7 +122,7 @@ transition: color 0.2s;
 color: #ef4444;
 }
 
-/* Søkeresultater */
+/* Søkeresultat-liste */
 #overlay-results {
 position: absolute;
 top: 70px;
