@@ -5,33 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Det Optimale Livshjulet</title>
     <style>
+        :root {
+            --trondheim-blue: #00509e;
+            --bg-light: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --white: #ffffff;
+        }
+
         body {
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f4f7f6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
         /* Slide-down søkelinje */
         #search-overlay {
             position: fixed;
-            top: -100px; /* Skjult over toppen */
+            top: -120px;
             left: 0;
             width: 100%;
-            height: 80px;
-            background-color: #ffffff;
+            height: 100px;
+            background-color: var(--white);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 4rem;
             box-sizing: border-box;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: top 0.3s ease-in-out;
-            z-index: 1001;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1100;
         }
 
         #search-overlay.active {
@@ -42,7 +52,7 @@
             flex: 1;
             display: flex;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
         }
@@ -50,54 +60,58 @@
         #overlay-search-input {
             width: 100%;
             border: none;
-            font-size: 24px;
-            color: #333;
+            font-size: 28px;
+            color: var(--text-main);
             outline: none;
             background: transparent;
-            padding: 10px 0;
-        }
-
-        #overlay-search-input::placeholder {
-            color: #94a3b8;
+            padding: 15px 0;
+            font-weight: 300;
         }
 
         .close-search {
             cursor: pointer;
-            padding: 10px;
-            font-size: 28px;
-            color: #1e293b;
-            font-weight: 300;
-            transition: color 0.2s;
-            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 24px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            transition: all 0.2s;
         }
 
         .close-search:hover {
+            background: #fee2e2;
             color: #ef4444;
+            transform: rotate(90deg);
         }
 
-        /* Resultater for det nye søket */
         #overlay-results {
             position: absolute;
-            top: 80px;
+            top: 100px;
             left: 0;
             width: 100%;
-            background: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-height: 400px;
+            background: var(--white);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            max-height: 450px;
             overflow-y: auto;
             display: none;
-            border-top: 1px solid #f1f5f9;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid var(--border-color);
         }
 
-        /* Navigatorlinje på toppen */
+        /* Navigatorlinje */
         header {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.75rem 2rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -109,49 +123,60 @@
         }
 
         .header-logo {
-            height: 40px;
+            height: 45px;
             width: auto;
-            margin-right: 15px;
+            margin-right: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.25rem;
-            color: #1e293b;
-            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--trondheim-blue);
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .search-trigger {
             cursor: pointer;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
+            padding: 8px;
+            border-radius: 12px;
+            transition: all 0.2s;
+            background: transparent;
         }
 
-        /* Økt størrelse på søkeikonet til 48px */
+        .search-trigger:hover {
+            background: #f1f5f9;
+            transform: scale(1.05);
+        }
+
         .search-trigger img {
-            height: 48px;
+            height: 42px;
             width: auto;
         }
 
+        /* Hovedinnhold */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            position: relative;
         }
 
         #wheel-container {
             width: 95vw;
-            max-width: 750px;
+            max-width: 780px;
             height: auto;
             aspect-ratio: 1 / 1;
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.12));
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.15));
+            z-index: 1;
         }
 
         svg { width: 100%; height: 100%; display: block; }
+        
+        /* Hjulets tekst-rendering */
         svg text, svg tspan, textPath { 
             user-select: none; 
             -webkit-user-select: none; 
@@ -161,12 +186,15 @@
 
         .interactive-slice {
             cursor: pointer;
-            transition: filter 0.15s ease-out;
+            transition: filter 0.2s ease, stroke-width 0.2s ease;
             stroke: white;
             stroke-width: 2px;
         }
 
-        .interactive-slice:hover { filter: brightness(1.15); }
+        .interactive-slice:hover { 
+            filter: brightness(1.12) saturate(1.1);
+            stroke-width: 3px;
+        }
 
         .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
         .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
@@ -176,62 +204,131 @@
             font-weight: 600; 
             fill: white; 
             letter-spacing: 0.4px;
-            text-shadow: 0px 1px 2px rgba(0,0,0,0.4);
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
         }
         
         .inner-ring-text { font-size: 16px; font-weight: 900; fill: #000; letter-spacing: 0.5px; }
 
+        /* Bunntekst */
         footer {
-            background-color: white;
-            border-top: 1px solid #e2e8f0;
-            padding: 1rem 2rem;
+            background-color: #fcfdfe;
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 3rem;
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
         }
 
-        .footer-logo { height: 220px; width: auto; }
-        .footer-left { display: flex; justify-content: center; padding-right: 2rem; }
-        .footer-right { display: flex; justify-content: center; }
-        .footer-center { text-align: center; }
+        .footer-logo { 
+            height: 200px; 
+            width: auto; 
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.06));
+            transition: transform 0.3s ease;
+        }
         
-        .footer-center h2 { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: 800; color: #1e293b; }
-        .footer-center p { margin: 0; font-size: 0.85rem; color: #64748b; line-height: 1.5; }
-        .editor-label { margin-top: 10px !important; font-weight: 700; color: #475569 !important; text-transform: uppercase; font-size: 0.7rem !important; letter-spacing: 1px; }
+        .footer-logo:hover {
+            transform: translateY(-5px);
+        }
 
-        /* Stil for søkeresultat-items */
+        .footer-left { display: flex; justify-content: flex-start; }
+        .footer-right { display: flex; justify-content: flex-end; }
+        .footer-center { 
+            text-align: center; 
+            max-width: 500px;
+        }
+        
+        .footer-center h2 { 
+            margin: 0 0 8px 0; 
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            color: var(--trondheim-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-center p { 
+            margin: 0; 
+            font-size: 0.9rem; 
+            color: var(--text-muted); 
+            line-height: 1.6; 
+            font-weight: 400;
+        }
+
+        .editor-section {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .editor-label { 
+            font-weight: 700; 
+            color: var(--text-main) !important; 
+            text-transform: uppercase; 
+            font-size: 0.75rem !important; 
+            letter-spacing: 1.5px;
+            margin-bottom: 4px !important;
+        }
+
+        /* Søkeresultat-design */
         .search-result-item {
-            padding: 15px 2rem;
+            padding: 1.2rem 4rem;
             cursor: pointer;
             border-bottom: 1px solid #f1f5f9;
-            max-width: 1200px;
-            margin: 0 auto;
+            transition: background 0.2s;
         }
 
-        .search-result-item:hover { background-color: #f8fafc; }
-        .search-result-title { font-weight: 600; color: #1e293b; font-size: 16px; }
-        .search-result-cat { font-size: 12px; color: #64748b; }
+        .search-result-item:hover { 
+            background-color: #f8fafc; 
+        }
+        
+        .search-result-title { 
+            font-weight: 700; 
+            color: var(--trondheim-blue); 
+            font-size: 18px; 
+            margin-bottom: 2px;
+        }
+        
+        .search-result-cat { 
+            font-size: 13px; 
+            color: var(--text-muted); 
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 1024px) {
+            footer {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+                padding: 2rem;
+            }
+            .footer-left, .footer-right { justify-content: center; padding: 0; }
+            .footer-logo { height: 150px; }
+            header { padding: 0.8rem 1.5rem; }
+            #search-overlay { padding: 0 1.5rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Ny søkelinje-overlay -->
+    <!-- Søkelinje-overlay -->
     <div id="search-overlay">
         <div class="search-input-wrapper">
-            <input type="text" id="overlay-search-input" placeholder="Søk i hele nettstedet" autocomplete="off">
+            <input type="text" id="overlay-search-input" placeholder="Hva leter du etter?" autocomplete="off">
             <div id="overlay-results"></div>
         </div>
-        <div class="close-search" id="close-search-btn">✕</div>
+        <div class="close-search" id="close-search-btn" title="Lukk søk">✕</div>
     </div>
 
     <header>
         <div class="header-left">
-            <img src="PAS logo.png" alt="PAS Logo" class="header-logo" onerror="this.src='https://placehold.co/100x40/00509e/ffffff?text=PAS+Logo'">
+            <img src="PAS logo.png" alt="PAS Logo" class="header-logo" onerror="this.src='https://placehold.co/100x45/00509e/ffffff?text=PAS'">
             <h1>Det optimale livshjulet</h1>
         </div>
-        <div class="search-trigger" id="search-trigger-btn">
-            <img src="Søke ikon.png" alt="Søk" onerror="this.src='https://img.icons8.com/ios-filled/50/000000/search--v1.png'">
+        <div class="search-trigger" id="search-trigger-btn" title="Åpne søk">
+            <img src="Søke ikon.png" alt="Søk" onerror="this.src='https://img.icons8.com/ios-filled/50/00509e/search--v1.png'">
         </div>
     </header>
 
@@ -241,14 +338,17 @@
 
     <footer>
         <div class="footer-left">
-            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-logo" onerror="this.src='https://placehold.co/200x220/f8fafc/64748b?text=PAS+Logo'">
+            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-logo" onerror="this.src='https://placehold.co/200x200/f8fafc/64748b?text=PAS+Logo'">
         </div>
         
         <div class="footer-center">
             <h2>Positiv adferdsstøtte i Trondheim kommune</h2>
             <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
-            <p class="editor-label">Ansvarlig redaktør:</p>
-            <p>[Navn på redaktør]</p>
+            
+            <div class="editor-section">
+                <p class="editor-label">Ansvarlig redaktør</p>
+                <p style="color: var(--text-main); font-weight: 600;">[Navn på redaktør]</p>
+            </div>
         </div>
 
         <div class="footer-right">
@@ -257,6 +357,7 @@
     </footer>
 
     <script>
+        // Data for hjulet og søk
         const data = [
             {
                 id: "relasjoner",
@@ -309,7 +410,7 @@
             {
                 id: "helse",
                 mainLabel: "Helse",
-                descLabel: "Best mulig helse for me",
+                descLabel: "Best mulig helse for meg",
                 colorMain: "#727679", colorDesc: "#727679",
                 link: "helse.html",
                 slices: [
@@ -318,6 +419,7 @@
             }
         ];
 
+        // Matematiske konstanter for SVG
         const CX = 500, CY = 500, R_CENTER = 70, R_RING1 = 120, R_RING2 = 310, R_RING3 = 460;
         const totalSlices = 13;
         const sliceAngle = 360 / totalSlices;
@@ -400,7 +502,7 @@
                 labelsStr += `<text class="arc-text-desc" dy="0.35em" filter="url(#textShadow)"><textPath href="#${pathIdDesc}" startOffset="50%" text-anchor="middle">${mainCat.descLabel}</textPath></text>`;
             });
 
-            slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_RING1}" fill="white" stroke="#333" stroke-width="2"></circle>`;
+            slicesStr += `<circle cx="${CX}" cy="${CY}" r="${R_RING1}" fill="white" stroke="#333" stroke-width="1.5"></circle>`;
             let innerSections = [
                 { label: "Inkludering", start: 225, end: 315 }, { label: "Ikke-ubehagelig", start: 321.5, end: 411.5 },
                 { label: "Valg", start: 45, end: 135 }, { label: "Kommunikasjon", start: 128.6, end: 218.6 }
@@ -412,6 +514,7 @@
                 labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pathIdInner}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
             });
 
+            // Piler
             let eqAngles = [59.6, 120.4, 226.6, 313.4];
             eqAngles.forEach(angle => {
                 let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, angle);
@@ -431,6 +534,7 @@
             document.getElementById('wheel-container').innerHTML = svgStr + `</defs>` + slicesStr + labelsStr + `</svg>`;
         }
 
+        // Søke-logikk
         function setupSearch() {
             const trigger = document.getElementById('search-trigger-btn');
             const overlay = document.getElementById('search-overlay');
@@ -440,7 +544,7 @@
 
             trigger.onclick = () => {
                 overlay.classList.add('active');
-                setTimeout(() => input.focus(), 300);
+                setTimeout(() => input.focus(), 400);
             };
 
             close.onclick = () => {
@@ -459,7 +563,7 @@
                 let matches = [];
                 data.forEach(cat => {
                     if (cat.mainLabel.toLowerCase().includes(term)) {
-                        matches.push({ title: cat.mainLabel, cat: 'Hovedkategori', link: cat.link });
+                        matches.push({ title: cat.mainLabel, cat: 'Hovedområde', link: cat.link });
                     }
                     cat.slices.forEach(slice => {
                         const cleanLabel = slice.label.replace(/\|/g, ' ');
@@ -478,7 +582,7 @@
                     `).join('');
                     results.style.display = 'block';
                 } else {
-                    results.innerHTML = '<div class="search-result-item" style="color: #64748b;">Ingen treff funnet...</div>';
+                    results.innerHTML = '<div class="search-result-item" style="color: var(--text-muted);">Vi fant dessverre ingen treff...</div>';
                     results.style.display = 'block';
                 }
             };
