@@ -81,12 +81,14 @@ function setupSearch() {
         }
 
         let matches = [];
+        // Vi sjekker variablen PAS_DATA som ligger i site-data.js
         if (typeof PAS_DATA !== 'undefined') {
             PAS_DATA.forEach(cat => {
                 if (cat.mainLabel.toLowerCase().includes(term)) {
                     matches.push({ title: cat.mainLabel, cat: 'Hovedområde', link: cat.link });
                 }
                 cat.slices.forEach(slice => {
+                    // Vi fjerner | streker fra hjulet slik at man kan søke på normal tekst
                     const cleanLabel = slice.label.replace(/\|/g, ' ');
                     if (cleanLabel.toLowerCase().includes(term)) {
                         matches.push({ title: cleanLabel, cat: cat.mainLabel, link: slice.link });
