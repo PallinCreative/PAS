@@ -1,11 +1,19 @@
+document.addEventListener('DOMContentLoaded', () => {
+    renderHeader();
+    renderFooter();
+    setupSearchLogic();
+});
+
 function renderHeader() {
     const headerHTML = `
         <div id="search-overlay">
-            <div class="search-input-wrapper">
-                <input type="text" id="overlay-search-input" placeholder="Hva leter du etter?" autocomplete="off">
+            <div class="search-input-wrapper" style="flex:1; max-width:1000px; margin:0 auto; position:relative;">
+                <input type="text" id="overlay-search-input" 
+                       style="width:100%; border:none; font-size:28px; outline:none; padding:15px 0; font-weight:300;" 
+                       placeholder="Hva leter du etter?" autocomplete="off">
                 <div id="overlay-results"></div>
             </div>
-            <div class="close-search" id="close-search-btn" title="Lukk søk">✕</div>
+            <div class="close-search" id="close-search-btn" style="cursor:pointer; font-size:30px;">✕</div>
         </div>
         <header>
             <div class="header-left">
@@ -30,8 +38,8 @@ function renderFooter() {
             <div class="footer-center">
                 <h2>Positiv atferdsstøtte i Trondheim kommune</h2>
                 <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
-                <div class="editor-section">
-                    <p class="editor-label">Ansvarlig redaktør</p>
+                <div class="editor-section" style="margin-top:15px; border-top:1px solid #e2e8f0; padding-top:10px;">
+                    <p style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Ansvarlig redaktør</p>
                     <p style="font-weight: 600;">[Navn på redaktør]</p>
                 </div>
             </div>
