@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine hjelpere - Det Optimale Livshjulet</title>
+    <!-- Henter felles design -->
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge hentet fra "Mine hjelpere"-stykket i hjulet (#C4ACD7) */
+            --module-color: #C4ACD7;
+            --module-light: #f7f3f9;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Overskriftseksjon */
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Innholdskort */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--trondheim-blue);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        /* Spesifikk stil for rollen-seksjonen */
+        .role-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5daed;
+            position: relative;
+        }
+
+        .important-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .important-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .important-list li:last-child { border-bottom: none; }
+
+        .important-list li::before {
+            content: "✓";
+            color: var(--trondheim-blue);
+            font-weight: bold;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Her limes navigatorlinjen inn automatisk -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="index.html" class="back-link">← Tilbake til hjulet</a>
+        
+        <section class="module-header">
+            <h1>Mine hjelpere</h1>
+            <p class="text-muted">Relasjonen mellom den som mottar tjenester og de som gir støtte.</p>
+        </section>
+
+        <!-- Seksjon 1: Hva er viktig -->
+        <div class="content-card">
+            <h2>Hva er viktig i møte med hjelperne?</h2>
+            <p>Hjelperne (personalet) er ofte de personene som tilbringer mest tid sammen med tjenestemottakeren. I et PAS-perspektiv er kvaliteten på denne relasjonen avgjørende for personens trygghet og utvikling.</p>
+            
+            <ul class="important-list">
+                <li><strong>Trygghet og tillit:</strong> At personen opplever hjelperne som forutsigbare, varme og støttende.</li>
+                <li><strong>Kompetanse:</strong> At hjelperne har kunnskap om personens unike behov, kommunikasjon og historie.</li>
+                <li><strong>Brukermedvirkning:</strong> At hjelperne lytter til og respekterer personens valg og ønsker.</li>
+                <li><strong>Kjemi og match:</strong> Bevissthet rundt hvem som jobber best sammen med hvem.</li>
+            </ul>
+        </div>
+
+        <!-- Seksjon 2: Profesjonalitet og roller -->
+        <div class="content-card role-box">
+            <h2>Profesjonell støtte i hverdagen</h2>
+            <p>Som hjelpere skal vi balansere mellom å være en nær støttespiller og å opprettholde en profesjonell rolle.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Viktige sjekkpunkter for personalet:</strong></p>
+                <ul class="important-list">
+                    <li>Vær bevisst på din egen påvirkning på personens dagsform og atferd.</li>
+                    <li>Sørg for god informasjonsutveksling mellom vakter for å sikre kontinuitet.</li>
+                    <li>Dokumenter positive opplevelser og mestring like grundig som utfordringer.</li>
+                    <li>Reflekter over egen praksis sammen med kollegaer i etisk refleksjon eller veiledning.</li>
+                </ul>
+            </div>
+            <p class="text-muted" style="font-style: italic; margin-top: 20px;">Husk: Vi er der for å gjøre personen mest mulig aktiv og selvstendig i eget liv.</p>
+        </div>
+    </main>
+
+    <!-- Her limes bunnteksten inn automatisk -->
+    <div id="pas-footer-container"></div>
+
+    <!-- Henter nødvendige skript -->
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
