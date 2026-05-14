@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lokalsamfunnet mitt - Det Optimale Livshjulet</title>
+    <!-- Henter felles design -->
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge hentet fra hjulet (#E5DAED) */
+            --module-color: #E5DAED;
+            --module-light: #faf8fd;
+            --module-border: #dcd0e6;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Overskriftseksjon */
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Innholdskort */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--trondheim-blue);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .community-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--module-border);
+            position: relative;
+        }
+
+        .important-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .important-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .important-list li:last-child { border-bottom: none; }
+
+        .important-list li::before {
+            content: "✓";
+            color: var(--trondheim-blue);
+            font-weight: bold;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Her limes navigatorlinjen inn automatisk -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="index.html" class="back-link">← Tilbake til hjulet</a>
+        
+        <section class="module-header">
+            <h1>Lokalsamfunnet mitt</h1>
+            <p class="text-muted">Å høre til og delta på arenaer utenfor hjemmet.</p>
+        </section>
+
+        <!-- Seksjon 1: Sosial inkludering -->
+        <div class="content-card">
+            <h2>Hva betyr lokalsamfunnet i et PAS-perspektiv?</h2>
+            <p>I PAS er vi opptatt av <em>sosial inkludering</em>. Det betyr ikke bare å være fysisk til stede i samfunnet, men å ha roller og opplevelser som gir mening og tilhørighet.</p>
+            
+            <ul class="important-list">
+                <li><strong>Bruk av fellesarenaer:</strong> Bibliotek, butikker, parker og kafeer.</li>
+                <li><strong>Sosiale roller:</strong> Å være en stamkunde, et medlem i en klubb eller en nabo.</li>
+                <li><strong>Mestring:</strong> Å lære seg å navigere i sitt eget nærmiljø med den støtten som trengs.</li>
+                <li><strong>Trygghet:</strong> At lokalsamfunnet er forutsigbart og tilgjengelig.</li>
+            </ul>
+        </div>
+
+        <!-- Seksjon 2: Tilrettelegging -->
+        <div class="content-card community-box">
+            <h2>Slik støtter vi deltakelse</h2>
+            <p>Vår oppgave som ansatte er å bygge ned barrierer mellom personen og samfunnet rundt.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Viktige fokusområder:</strong></p>
+                <ul class="important-list">
+                    <li>Kartlegg hvilke arenaer i nærmiljøet personen har interesse av å bruke.</li>
+                    <li>Sørg for nødvendig transport og praktisk tilrettelegging for utflukter.</li>
+                    <li>Jobb med "usynlig støtte" slik at personen får skinne i sosiale settinger.</li>
+                    <li>Dokumenter positive interaksjoner og nye steder som utforskes.</li>
+                </ul>
+            </div>
+            <p class="text-muted" style="font-style: italic; margin-top: 20px;">Husk: Inkludering forebygger utenforskap og øker selvfølelsen.</p>
+        </div>
+    </main>
+
+    <!-- Her limes bunnteksten inn automatisk -->
+    <div id="pas-footer-container"></div>
+
+    <!-- Henter nødvendige skript -->
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
