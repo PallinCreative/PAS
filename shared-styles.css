@@ -32,8 +32,23 @@ top: 0;
 z-index: 1000;
 }
 
-.header-logo { height: 45px; width: auto; margin-right: 20px; }
-header h1 { margin: 0; font-size: 1.4rem; color: var(--trondheim-blue); font-weight: 800; }
+.header-left {
+display: flex;
+align-items: center;
+}
+
+.header-logo {
+height: 45px;
+width: auto;
+margin-right: 20px;
+}
+
+header h1 {
+margin: 0;
+font-size: 1.4rem;
+color: var(--trondheim-blue);
+font-weight: 800;
+}
 
 /* Søk */
 #search-overlay {
@@ -76,9 +91,23 @@ display: flex;
 flex-direction: column;
 }
 
-.footer-col.left { flex: 1; align-items: flex-start; }
-.footer-col.right { flex: 1; align-items: flex-end; }
-.footer-col.center { flex: 2; text-align: center; min-width: 600px; }
+.footer-col.left {
+flex: 1;
+align-items: flex-start; /* Logo ut fra kanten... /
+padding-left: 10%;      / ...men dytter den 10% innover */
+}
+
+.footer-col.right {
+flex: 1;
+align-items: flex-end;   /* Logo ut fra kanten... /
+padding-right: 10%;      / ...men dytter den 10% innover */
+}
+
+.footer-col.center {
+flex: 2;
+text-align: center;
+min-width: 600px;
+}
 
 .footer-img {
 display: block;
