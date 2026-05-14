@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fritid og moro - Det Optimale Livshjulet</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge for Fritid og moro (#A2C0E2) */
+            --module-color: #A2C0E2;
+            --module-text: #1e293b;
+            --module-light: #f5f9ff;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--trondheim-blue);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+        }
+
+        .highlight-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--module-color);
+            margin-top: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .check-list li::before {
+            content: "🎈";
+            font-size: 1.2rem;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasjonslinje -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="tid.html" class="back-link">← Tilbake til Meningsfull tid</a>
+        
+        <section class="module-header">
+            <h1>Fritid og moro</h1>
+            <p class="text-muted">Glede, rekreasjon og det som gir livet farge.</p>
+        </section>
+
+        <div class="content-card">
+            <h2>Hva liker jeg å gjøre?</h2>
+            <p>Fritid handler om mer enn bare å fylle tomrom mellom aktiviteter. Det handler om de tingene man velger å gjøre fordi det er gøy, spennende eller avslappende.</p>
+            
+            <ul class="check-list">
+                <li><strong>Ekte valg:</strong> Har personen mulighet til å velge bort aktiviteter de ikke liker?</li>
+                <li><strong>Nye impulser:</strong> Legger vi til rette for å prøve nye ting og oppdage nye interesser?</li>
+                <li><strong>Sosial glede:</strong> Er det rom for uformelt samvær og moro uten en streng tidsplan?</li>
+                <li><strong>Avkobling:</strong> Har personen steder og tidspunkter hvor de kan bare "være"?</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>Personalets rolle som med-opplever</h2>
+            <p>Som ansatte skal vi ikke bare overvåke fritiden, vi skal bidra til å skape gode øyeblikk.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Husk:</strong> Det som er "moro" for deg, er kanskje ikke det samme for personen du jobber med. Bruk kartlegging av interesser aktivt for å finne de små og store tingene som skaper hverdagsmagi.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bunntekst -->
+    <div id="pas-footer-container"></div>
+
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
