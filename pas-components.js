@@ -34,7 +34,7 @@ function renderFooter() {
     const footerHTML = `
     <footer class="main-footer">
         <div class="footer-col left">
-            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-img" style="height: 180px; width: auto;">
+            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-img" style="height: 180px; width: auto; display: block;">
         </div>
         
         <div class="footer-col center">
@@ -48,7 +48,7 @@ function renderFooter() {
         </div>
 
         <div class="footer-col right">
-            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim Kommune Logo" class="footer-img" style="height: 180px; width: auto;">
+            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim Kommune Logo" class="footer-img" style="height: 180px; width: auto; display: block;">
         </div>
     </footer>
     `;
@@ -84,8 +84,8 @@ function setupSearch() {
         }
 
         let matches = [];
-        if (typeof data !== 'undefined') {
-            data.forEach(cat => {
+        if (typeof PAS_DATA !== 'undefined') {
+            PAS_DATA.forEach(cat => {
                 if (cat.mainLabel.toLowerCase().includes(term)) {
                     matches.push({ title: cat.mainLabel, cat: 'Hovedområde', link: cat.link });
                 }
