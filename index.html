@@ -6,9 +6,13 @@
     <title>Det Optimale Livshjulet</title>
     <link rel="stylesheet" href="shared-styles.css">
     <style>
-        /* Lokale stiler kun for hjulet */
         main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 3rem 2rem; }
         #wheel-container { width: 95vw; max-width: 780px; aspect-ratio: 1 / 1; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.15)); }
+        
+        /* Disse stilene sikrer de hvite mellomrommene og hover-effekten uansett ekstern CSS */
+        .interactive-slice { cursor: pointer; transition: filter 0.2s ease; stroke: white; stroke-width: 2px; }
+        .interactive-slice:hover { filter: brightness(1.12) saturate(1.1); }
+        
         .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
         .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
         .arc-text-desc { font-size: 15px; font-weight: 600; fill: white; text-shadow: 0px 1px 3px rgba(0,0,0,0.5); }
