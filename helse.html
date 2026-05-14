@@ -4,140 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helse - Det Optimale Livshjulet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Grunnleggende stil */
+        :root {
+            /* Helse-kategorien bruker Slate/Grå fra hjulet */
+            --category-color: #64748b; 
+            --category-dark: #1e293b;
+            --category-light: #f8fafc;
+            --tk-blue: #17244D;
+            --accent-orange: #F18E1C;
+        }
+
         body {
-            margin: 0; padding: 20px;
-            background-color: #f4f7f6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333; display: flex; justify-content: center;
-        }
-
-        /* Hovedkortet */
-        .container {
-            max-width: 900px; width: 100%;
-            background: white; padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: 40px; margin-bottom: 40px;
-        }
-
-        /* Tekststiler */
-        h1 { color: #727679; font-size: 2.8em; margin: 0 0 10px 0; }
-        h2 { color: #555; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;}
-        p { line-height: 1.7; font-size: 1.15em; margin-bottom: 20px; }
-
-        /* BYGGEKLOSS 1: Intro-boks (Venstre-strek) */
-        .intro-box {
-            border-left: 6px solid #727679;
-            padding-left: 20px; margin-bottom: 40px;
-            background-color: #fcfcfc; padding-top: 10px; padding-bottom: 10px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* BYGGEKLOSS 2: To kolonner (Tekst og Bilde side om side) */
-        .two-columns {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--category-light);
+            color: var(--tk-blue);
+            margin: 0;
             display: flex;
-            gap: 30px; /* Avstand mellom kolonnene */
-            align-items: center; /* Sentrerer innholdet vertikalt */
-            margin-bottom: 30px;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        .text-column { flex: 1; } /* Tar 50% av plassen */
-        .image-column { flex: 1; } /* Tar 50% av plassen */
 
-        /* Hvordan et bilde oppfører seg */
-        .styled-image {
+        .nav-container {
+            background: white;
+            border-bottom: 2px solid #edf2f7;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 300px;
             width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* Plassholder for bilde (til du har et ekte bilde) */
-        .image-placeholder {
-            width: 100%; height: 250px;
-            background-color: #e0e5e3;
-            border-radius: 12px;
-            display: flex; justify-content: center; align-items: center;
-            color: #727679; font-weight: bold; font-size: 1.2em;
-            border: 2px dashed #b5b7b9;
+        .search-input {
+            width: 100%;
+            padding: 8px 15px 8px 35px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
         }
 
-        /* BYGGEKLOSS 3: Fremhevet info-kort (f.eks til tips eller advarsler) */
-        .info-card {
-            background-color: #e8f4f8; /* Lys blå */
-            border-radius: 12px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid #bce0ed;
+        .search-input:focus {
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px rgba(241, 142, 28, 0.1);
         }
-        .info-card h3 { margin-top: 0; color: #00747A; }
 
-        /* Tilbake-knappen */
-        .back-btn {
-            background-color: #F18E1C; color: #17244D;
-            padding: 12px 35px; font-size: 20px; font-weight: 900;
-            border-radius: 80px; text-decoration: none; display: inline-block;
-            transition: transform 0.2s, filter 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 40px; font-family: 'Arial Black', 'Segoe UI Black', sans-serif;
+        .hero {
+            background: linear-gradient(135deg, var(--category-color) 0%, var(--category-dark) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
         }
-        .back-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
-        
-        /* Gjør at alt ser bra ut på mobil (legger kolonnene under hverandre i stedet for side om side) */
-        @media (max-width: 768px) {
-            .container { padding: 25px; margin-top: 10px; }
-            h1 { font-size: 2.2em; }
-            .two-columns { flex-direction: column; } /* Tvinger kolonner under hverandre på mobil */
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
         }
+
+        .hero p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        main {
+            flex-grow: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            width: 100%;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-left: 8px solid var(--category-color);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--tk-blue);
+        }
+
+        .theory-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        /* Spesifikk boks for Helseplattformen */
+        .hp-section {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .hp-badge {
+            background: #0056b3;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .btn-back {
+            background-color: var(--accent-orange);
+            color: var(--tk-blue);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(241, 142, 28, 0.2);
+            margin: 2rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(241, 142, 28, 0.3);
+        }
+
+        footer {
+            background-color: var(--tk-blue);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h4 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <!-- Navigasjon: Identisk med index.html -->
+    <nav class="nav-container">
+        <div class="logo-section">
+            <img src="https://www.trondheim.kommune.no/globalassets/design-og-profil/logo/trondheim_logo_blaa.png" alt="Trondheim Kommune Logo" class="logo-img" onerror="this.src='https://placehold.co/150x50/17244D/white?text=Trondheim+Kommune'">
+            <span class="font-extrabold text-xl tracking-tight uppercase">Trondheim Kommune</span>
+        </div>
         
-        <a href="index.html" class="back-btn">Tilbake</a>
+        <div class="search-container">
+            <svg class="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input type="search" placeholder="Søk i portalen..." class="search-input">
+        </div>
+    </nav>
 
+    <!-- Hero Seksjon -->
+    <header class="hero">
         <h1>Helse</h1>
-        
-        <!-- INTRO-BOKSEN -->
-        <div class="intro-box">
-            <h2 style="margin-top: 0; border: none;">Best mulig helse for meg</h2>
-            <p>Her er en kort introduksjon til helsedelen. Legg merke til den stilige grå kanten til venstre.</p>
-        </div>
+        <p>Best mulig helse for meg</p>
+    </header>
 
-        <h2>Fysisk aktivitet (Eksempel på tekst og bilde side om side)</h2>
-        
-        <!-- TO KOLONNER (Tekst + Bilde) -->
-        <div class="two-columns">
-            <div class="text-column">
-                <p>Når vi bruker kolonner, kan vi få teksten til å flyte pent ved siden av et bilde. Dette ser veldig profesjonelt ut på PC.</p>
-                <p>Når brukeren åpner dette på en mobiltelefon, vil koden vår automatisk flytte bildet ned *under* teksten, slik at ingenting blir for smått!</p>
+    <main>
+        <section class="content-card">
+            <h2>💡 Teoretisk grunnlag</h2>
+            <div class="theory-text">
+                <p>Helse i et PAS-perspektiv (Positiv Atferdsstøtte) handler om hvordan fysisk og psykisk velvære danner grunnlaget for livskvalitet. Vi ser på helse som en forutsetning for at individet skal kunne delta i meningsfulle aktiviteter og oppleve mestring.</p>
+                <ul class="list-disc ml-6 mt-6 space-y-4">
+                    <li><strong>Smertekartlegging:</strong> Uforklarlig atferd er ofte ubehandlet smerte.</li>
+                    <li><strong>Søvnhygiene:</strong> Gode rutiner for hvile reduserer stressnivået.</li>
+                    <li><strong>Ernæring og trivsel:</strong> Et balansert kosthold påvirker emosjonell regulering.</li>
+                </ul>
             </div>
-            <div class="image-column">
-                <!-- Slik ser koden for et ekte bilde ut: <img src="ditt-bilde.jpg" class="styled-image"> -->
-                <div class="image-placeholder">
-                    [Bilde av en treningsøkt]
-                </div>
+        </section>
+
+        <section class="content-card">
+            <h2>📝 Dokumentasjon i Helseplattformen</h2>
+            <div class="hp-section">
+                <span class="hp-badge">Helseplattformen (HP)</span>
+                <p class="theory-text font-semibold mb-4">Viktige rutiner for journalføring:</p>
+                <ul class="space-y-4 text-sm md:text-base">
+                    <li class="flex items-start gap-4">
+                        <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">1</div>
+                        <span>Bruk <strong>Smart-tekster</strong> for PAS for å sikre faglig korrekt terminologi.</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">2</div>
+                        <span>Oppdater <strong>Tiltaksplanen</strong> umiddelbart etter legebesøk eller medisinendring.</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold">3</div>
+                        <span>Knytt observasjoner til relevante <strong>Mål</strong> for å kunne se trender over tid.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Tilbake-knapp plassert nederst -->
+        <div class="text-center">
+            <a href="index.html" class="btn-back">← Tilbake til Livshjulet</a>
+        </div>
+    </main>
+
+    <!-- Footer: Identisk med index.html -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Om Prosjektet</h4>
+                <p class="text-sm opacity-80 leading-relaxed">Dette interaktive livshjulet er utviklet for å gi ansatte i Trondheim kommune et verktøy for helhetlig oppfølging basert på verdiene i Positiv atferdsstøtte (PAS).</p>
+            </div>
+            <div class="footer-col">
+                <h4>Ressurser</h4>
+                <ul class="text-sm opacity-80 space-y-2">
+                    <li><a href="#" class="hover:text-orange-400 transition">Faglig veileder PAS</a></li>
+                    <li><a href="#" class="hover:text-orange-400 transition">Opplæring Helseplattformen</a></li>
+                    <li><a href="#" class="hover:text-orange-400 transition">Kursportal for ansatte</a></li>
+                </ul>
             </div>
         </div>
-
-        <h2>Viktige rutiner (Eksempel på uthevet boks)</h2>
-        
-        <p>Noen ganger har du kanskje noen tips eller en sjekkliste som du vil at personalet virkelig skal legge merke til. Da kan vi bruke et "Info-kort".</p>
-
-        <!-- INFO-KORTET -->
-        <div class="info-card">
-            <h3>💡 Tips til personalet</h3>
-            <ul>
-                <li>Husk å alltid spørre brukeren hva de ønsker å gjøre i dag.</li>
-                <li>Drikk vann regelmessig gjennom hele aktiviteten.</li>
-                <li>Tilrettelegg utstyr på forhånd.</li>
-            </ul>
+        <div class="footer-bottom">
+            © 2024 Trondheim Kommune - Enhet for voksne med utviklingshemming
         </div>
-
-        <h2>Bare ren tekst</h2>
-        <p>Og hvis du bare vil ha ren tekst, skriver vi bare som normalt. Nettleseren sørger for at det aldri blir for bredt og ubehagelig å lese.</p>
-
-    </div>
+    </footer>
 
 </body>
 </html>
