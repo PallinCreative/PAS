@@ -6,13 +6,13 @@
     <title>Det Optimale Livshjulet</title>
     <link rel="stylesheet" href="shared-styles.css">
     <style>
-        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 3rem 2rem; }
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; }
         #wheel-container { width: 95vw; max-width: 780px; aspect-ratio: 1 / 1; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.15)); }
         
-        /* Disse stilene sikrer de hvite mellomrommene og hover-effekten uansett ekstern CSS */
         .interactive-slice { cursor: pointer; transition: filter 0.2s ease; stroke: white; stroke-width: 2px; }
         .interactive-slice:hover { filter: brightness(1.12) saturate(1.1); }
         
+        svg text, svg tspan, textPath { pointer-events: none !important; }
         .radial-text { font-size: 14px; font-weight: 800; fill: #000; }
         .arc-text-title { font-size: 20px; font-weight: bold; fill: white; }
         .arc-text-desc { font-size: 15px; font-weight: 600; fill: white; text-shadow: 0px 1px 3px rgba(0,0,0,0.5); }
@@ -20,19 +20,14 @@
     </style>
 </head>
 <body>
-
     <div id="pas-header-container"></div>
-
-    <main>
-        <div id="wheel-container"></div>
-    </main>
-
+    <main><div id="wheel-container"></div></main>
     <div id="pas-footer-container"></div>
 
     <script src="site-data.js"></script>
     <script src="pas-components.js"></script>
-    
     <script>
+        // ... (Her ligger din originale generateWheel-funksjon, den er uendret)
         const CX = 500, CY = 500, R_CENTER = 70, R_RING1 = 120, R_RING2 = 310, R_RING3 = 460;
         const totalSlices = 13;
         const sliceAngle = 360 / totalSlices;
@@ -117,7 +112,6 @@
 
             document.getElementById('wheel-container').innerHTML = svgStr + `</defs>` + slicesStr + labelsStr + `</svg>`;
         }
-
         window.addEventListener('load', generateWheel);
     </script>
 </body>
