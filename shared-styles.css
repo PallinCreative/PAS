@@ -1,4 +1,4 @@
-/* STREAMING_CHUNK: Globalt designoppsett */
+/* STREAMING_CHUNK: Globalt designoppsett for stabil layout */
 :root {
 --trondheim-blue: #003d7a;
 --bg-light: #f8fafc;
@@ -16,10 +16,9 @@ flex-direction: column;
 min-height: 100vh;
 background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
 font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-color: var(--text-main);
 }
 
-/* Header og Søk */
+/* Header */
 header {
 background-color: rgba(255, 255, 255, 0.95);
 backdrop-filter: blur(10px);
@@ -36,6 +35,7 @@ z-index: 1000;
 .header-logo { height: 45px; width: auto; margin-right: 20px; }
 header h1 { margin: 0; font-size: 1.4rem; color: var(--trondheim-blue); font-weight: 800; }
 
+/* Søk */
 #search-overlay {
 position: fixed;
 top: -120px;
@@ -48,32 +48,32 @@ align-items: center;
 justify-content: space-between;
 padding: 0 4rem;
 box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+transition: top 0.4s ease;
 z-index: 1100;
 }
 #search-overlay.active { top: 0; }
-#overlay-search-input { width: 100%; border: none; font-size: 28px; outline: none; background: transparent; }
+#overlay-search-input { width: 100%; border: none; font-size: 28px; outline: none; }
 
-.search-trigger { cursor: pointer; padding: 8px; border-radius: 12px; }
+.search-trigger { cursor: pointer; padding: 8px; }
 .search-trigger img { height: 48px; width: auto; }
 
 /* --- ROBUST FOOTER LAYOUT --- */
 .main-footer {
 background-color: #ffffff;
 border-top: 1px solid var(--border-color);
-padding: 1.5rem 2rem;
+padding: 1rem 2rem;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
 width: 100%;
 box-sizing: border-box;
+margin-top: auto;
 }
 
 .footer-col {
 display: flex;
 flex-direction: column;
-align-items: center;
 }
 
 .footer-col.left { flex: 1; align-items: flex-start; }
@@ -82,7 +82,7 @@ align-items: center;
 
 .footer-img {
 display: block;
-max-height: 180px; /* Redusert litt for å sikre plass på linjen */
+max-height: 180px;
 width: auto;
 }
 
@@ -91,7 +91,7 @@ margin: 0 0 5px 0;
 font-size: 1.15rem;
 font-weight: 800;
 color: var(--trondheim-blue);
-white-space: nowrap; /* Nekter linjeskift */
+white-space: nowrap;
 }
 
 .footer-subtitle {
@@ -102,26 +102,10 @@ line-height: 1.4;
 }
 
 .editor-box {
-margin-top: 15px;
-padding-top: 10px;
+margin-top: 10px;
+padding-top: 5px;
 border-top: 1px solid #f1f5f9;
 }
 
-.editor-tag {
-font-weight: 700;
-text-transform: uppercase;
-font-size: 0.7rem;
-letter-spacing: 1.2px;
-color: var(--text-muted);
-}
-
-.editor-name {
-margin: 2px 0 0 0;
-font-weight: 600;
-color: var(--text-main);
-}
-
-/* Hjul-tekst sikkerhet */
-svg text, svg tspan, textPath {
-pointer-events: none !important;
-}
+.editor-tag { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; color: var(--text-muted); }
+.editor-name { margin: 2px 0 0 0; font-weight: 600; color: var(--text-main); }
