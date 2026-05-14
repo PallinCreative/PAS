@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitt arbeid - Det Optimale Livshjulet</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge for Mitt arbeid (#678EC9) */
+            --module-color: #678EC9;
+            --module-text: #ffffff;
+            --module-light: #f4f7fb;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--module-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+        }
+
+        .info-box {
+            background-color: var(--module-color);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .check-list li::before {
+            content: "💼";
+            font-size: 1.2rem;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasjonslinje -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="tid.html" class="back-link">← Tilbake til Meningsfull tid</a>
+        
+        <section class="module-header">
+            <h1>Mitt arbeid</h1>
+            <p class="text-muted">Mine arbeidsoppgaver, mestring og arbeidsmiljø.</p>
+        </section>
+
+        <div class="content-card">
+            <h2>Arbeid og identitet</h2>
+            <p>For de fleste av oss er arbeid en kilde til identitet, sosial tilhørighet og stolthet. I et PAS-perspektiv handler arbeid om å finne oppgaver som samsvarer med personens sterke sider og interesser.</p>
+            
+            <ul class="check-list">
+                <li><strong>Mestringsfølelse:</strong> Oppleve at man gjør en nyttig jobb og får brukt sine evner.</li>
+                <li><strong>Sosialt fellesskap:</strong> Være en del av et arbeidsmiljø og ha kolleger.</li>
+                <li><strong>Struktur:</strong> Arbeid gir dagen en fast ramme og meningsfullt innhold.</li>
+                <li><strong>Rolle:</strong> Gå fra å være "tjenestemottaker" til å være "arbeidstaker".</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>Tilrettelegging for suksess</h2>
+            <p>For at arbeidsdagen skal bli god, er det ofte behov for tydelige rammer og riktig støtte fra personalet.</p>
+            
+            <div class="info-box">
+                <h3>Sjekkliste for gode arbeidsdager:</h3>
+                <p>Er arbeidsoppgavene delt opp i forståelige trinn? Er det lagt inn gode pauser? Har personen de verktøyene og den støtten som trengs for å føle seg trygg i jobben sin?</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bunntekst -->
+    <div id="pas-footer-container"></div>
+
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
