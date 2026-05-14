@@ -17,7 +17,6 @@ min-height: 100vh;
 background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
 font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 color: var(--text-main);
-overflow-x: hidden;
 }
 
 /* STREAMING_CHUNK:Styling for felles header og søke-overlay... */
@@ -35,43 +34,15 @@ top: 0;
 z-index: 1000;
 }
 
-.header-left {
-display: flex;
-align-items: center;
-}
+.header-left { display: flex; align-items: center; }
+.header-logo { height: 45px; width: auto; margin-right: 20px; }
+header h1 { margin: 0; font-size: 1.4rem; color: var(--trondheim-blue); font-weight: 800; letter-spacing: -0.5px; }
 
-.header-logo {
-height: 45px;
-width: auto;
-margin-right: 20px;
-}
+/* STREAMING_CHUNK:Søke-ikon og overlay... */
+.search-trigger { cursor: pointer; padding: 8px; border-radius: 12px; transition: all 0.2s; }
+.search-trigger:hover { background: #f1f5f9; transform: scale(1.05); }
+.search-trigger img { height: 48px; width: auto; }
 
-header h1 {
-margin: 0;
-font-size: 1.4rem;
-color: var(--trondheim-blue);
-font-weight: 800;
-letter-spacing: -0.5px;
-}
-
-.search-trigger {
-cursor: pointer;
-padding: 8px;
-border-radius: 12px;
-transition: all 0.2s;
-}
-
-.search-trigger:hover {
-background: #f1f5f9;
-transform: scale(1.05);
-}
-
-.search-trigger img {
-height: 48px;
-width: auto;
-}
-
-/* STREAMING_CHUNK:Styling for søke-overlay... */
 #search-overlay {
 position: fixed;
 top: -120px;
@@ -89,49 +60,7 @@ transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 z-index: 1100;
 }
 
-#search-overlay.active {
-top: 0;
-}
-
-.search-input-wrapper {
-flex: 1;
-display: flex;
-align-items: center;
-max-width: 1000px;
-margin: 0 auto;
-position: relative;
-}
-
-#overlay-search-input {
-width: 100%;
-border: none;
-font-size: 28px;
-color: var(--text-main);
-outline: none;
-background: transparent;
-padding: 15px 0;
-font-weight: 300;
-}
-
-.close-search {
-cursor: pointer;
-width: 40px;
-height: 40px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 50%;
-font-size: 24px;
-background: #f1f5f9;
-color: var(--text-muted);
-transition: all 0.2s;
-}
-
-.close-search:hover {
-background: #fee2e2;
-color: #ef4444;
-transform: rotate(90deg);
-}
+#search-overlay.active { top: 0; }
 
 #overlay-results {
 position: absolute;
@@ -147,51 +76,41 @@ border-radius: 0 0 16px 16px;
 border-top: 1px solid var(--border-color);
 }
 
-/* STREAMING_CHUNK:Styling for felles footer... */
+/* STREAMING_CHUNK:Stiler for Livshjulet (fikser hover-problemet)... /
+svg text, svg tspan, textPath {
+pointer-events: none !important; / Dette stopper teksten fra å ødelegge hover */
+user-select: none;
+}
+
+.interactive-slice {
+cursor: pointer;
+transition: filter 0.2s ease;
+stroke: white;
+stroke-width: 2px;
+}
+
+.interactive-slice:hover {
+filter: brightness(1.12) saturate(1.1);
+}
+
+/* STREAMING_CHUNK:Felles footer layout... */
 footer {
 background-color: #fcfdfe;
 border-top: 1px solid var(--border-color);
-padding: 1rem 3rem;
+padding: 1.5rem 3rem;
 display: grid;
 grid-template-columns: 1fr auto 1fr;
 align-items: center;
 gap: 3rem;
 }
 
-.footer-logo {
-height: 220px;
-width: auto;
-transition: transform 0.3s ease;
-}
-
+.footer-logo { height: 220px; width: auto; }
 .footer-left { display: flex; justify-content: flex-start; padding-right: 2rem; }
 .footer-right { display: flex; justify-content: flex-end; }
 .footer-center { text-align: center; max-width: 500px; }
+.footer-center h2 { color: var(--trondheim-blue); font-weight: 800; margin-bottom: 8px; }
 
-.footer-center h2 {
-margin: 0 0 8px 0;
-font-size: 1.15rem;
-font-weight: 800;
-color: var(--trondheim-blue);
-text-transform: uppercase;
-}
-
-.editor-label {
-font-weight: 700;
-color: var(--text-main);
-text-transform: uppercase;
-font-size: 0.75rem;
-letter-spacing: 1.5px;
-margin-top: 15px;
-}
-
-/* STREAMING_CHUNK:Responsivitet... */
-@media (max-width: 1024px) {
-footer {
-grid-template-columns: 1fr;
-text-align: center;
-padding: 2rem;
-}
-.footer-left, .footer-right { justify-content: center; padding: 0; }
-.footer-logo { height: 150px; }
-}
+/* STREAMING_CHUNK:Søkeresultater... */
+.search-result-item { padding: 1.2rem 4rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+.search-result-item:hover { background-color: #f8fafc; }
+.search-result-title { font-weight: 700; color: var(--trondheim-blue); font-size: 18px; }
