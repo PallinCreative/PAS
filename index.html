@@ -6,12 +6,15 @@
     <title>Det Optimale Livshjulet</title>
     <style>
         :root {
-            --trondheim-blue: #00509e;
+            /* Mørkere blåfarge for bedre kontrast og autoritet */
+            --trondheim-blue: #003d7a;
             --bg-light: #f8fafc;
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --white: #ffffff;
+            /* En varm oransje farge for bakgrunnsgløden */
+            --pas-orange: rgba(241, 142, 28, 0.08);
         }
 
         body {
@@ -20,7 +23,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+            background-color: #ffffff;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
@@ -104,7 +107,7 @@
 
         /* Navigatorlinje */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             padding: 0.8rem 3rem;
@@ -126,7 +129,6 @@
             height: 45px;
             width: auto;
             margin-right: 20px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
         }
 
         header h1 {
@@ -142,7 +144,6 @@
             padding: 8px;
             border-radius: 12px;
             transition: all 0.2s;
-            background: transparent;
         }
 
         .search-trigger:hover {
@@ -155,7 +156,7 @@
             width: auto;
         }
 
-        /* Hovedinnhold */
+        /* Hovedinnhold med svak oransje glød */
         main {
             flex: 1;
             display: flex;
@@ -163,6 +164,7 @@
             align-items: center;
             padding: 3rem 2rem;
             position: relative;
+            background: radial-gradient(circle, var(--pas-orange) 0%, rgba(255,255,255,0) 70%);
         }
 
         #wheel-container {
@@ -176,7 +178,6 @@
 
         svg { width: 100%; height: 100%; display: block; }
         
-        /* Hjulets tekst-rendering */
         svg text, svg tspan, textPath { 
             user-select: none; 
             -webkit-user-select: none; 
@@ -223,7 +224,6 @@
         .footer-logo { 
             height: 200px; 
             width: auto; 
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.06));
             transition: transform 0.3s ease;
         }
         
@@ -270,7 +270,6 @@
             margin-bottom: 4px !important;
         }
 
-        /* Søkeresultat-design */
         .search-result-item {
             padding: 1.2rem 4rem;
             cursor: pointer;
@@ -324,11 +323,11 @@
 
     <header>
         <div class="header-left">
-            <img src="PAS logo.png" alt="PAS Logo" class="header-logo" onerror="this.src='https://placehold.co/100x45/00509e/ffffff?text=PAS'">
+            <img src="PAS logo.png" alt="PAS Logo" class="header-logo" onerror="this.src='https://placehold.co/100x45/003d7a/ffffff?text=PAS'">
             <h1>Det optimale livshjulet</h1>
         </div>
         <div class="search-trigger" id="search-trigger-btn" title="Åpne søk">
-            <img src="Søke ikon.png" alt="Søk" onerror="this.src='https://img.icons8.com/ios-filled/50/00509e/search--v1.png'">
+            <img src="Søke ikon.png" alt="Søk" onerror="this.src='https://img.icons8.com/ios-filled/50/003d7a/search--v1.png'">
         </div>
     </header>
 
@@ -342,7 +341,8 @@
         </div>
         
         <div class="footer-center">
-            <h2>Positiv adferdsstøtte i Trondheim kommune</h2>
+            <!-- Skrivefeil rettet: atferdsstøtte -->
+            <h2>Positiv atferdsstøtte i Trondheim kommune</h2>
             <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
             
             <div class="editor-section">
@@ -357,7 +357,6 @@
     </footer>
 
     <script>
-        // Data for hjulet og søk
         const data = [
             {
                 id: "relasjoner",
@@ -419,7 +418,6 @@
             }
         ];
 
-        // Matematiske konstanter for SVG
         const CX = 500, CY = 500, R_CENTER = 70, R_RING1 = 120, R_RING2 = 310, R_RING3 = 460;
         const totalSlices = 13;
         const sliceAngle = 360 / totalSlices;
@@ -514,7 +512,6 @@
                 labelsStr += `<text class="inner-ring-text" dy="0.35em"><textPath href="#${pathIdInner}" startOffset="50%" text-anchor="middle">${sec.label}</textPath></text>`;
             });
 
-            // Piler
             let eqAngles = [59.6, 120.4, 226.6, 313.4];
             eqAngles.forEach(angle => {
                 let p = getCoords(CX, CY, (R_CENTER + R_RING1)/2, angle);
@@ -534,7 +531,6 @@
             document.getElementById('wheel-container').innerHTML = svgStr + `</defs>` + slicesStr + labelsStr + `</svg>`;
         }
 
-        // Søke-logikk
         function setupSearch() {
             const trigger = document.getElementById('search-trigger-btn');
             const overlay = document.getElementById('search-overlay');
