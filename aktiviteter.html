@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine aktiviteter - Det Optimale Livshjulet</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge for Mine aktiviteter (#D9E8F5) */
+            --module-color: #D9E8F5;
+            --module-text: #1e293b;
+            --module-accent: #2B5592; /* Mørkere blå for kontrast */
+            --module-light: #f8fbff;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--module-accent);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+        }
+
+        .highlight-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--module-color);
+            margin-top: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .check-list li::before {
+            content: "🎨";
+            font-size: 1.2rem;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasjonslinje -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="tid.html" class="back-link">← Tilbake til Meningsfull tid</a>
+        
+        <section class="module-header">
+            <h1>Mine aktiviteter</h1>
+            <p class="text-muted">Hverdagsaktiviteter, hobbyer og mestring i dagliglivet.</p>
+        </section>
+
+        <div class="content-card">
+            <h2>Hva fyller jeg dagen min med?</h2>
+            <p>Aktiviteter er alt vi gjør fra vi står opp til vi legger oss. I et PAS-perspektiv er målet at disse aktivitetene skal være lystbetonte og bidra til en følelse av mestring og autonomi.</p>
+            
+            <ul class="check-list">
+                <li><strong>Daglige gjøremål:</strong> Er personen inkludert i hverdagens oppgaver på en meningsfull måte?</li>
+                <li><strong>Hobbyer:</strong> Legger vi til rette for interesser som musikk, kunst, sport eller andre lidenskaper?</li>
+                <li><strong>Mestring:</strong> Bruker vi metoder som støtter opp under det personen faktisk får til selv?</li>
+                <li><strong>Variasjon:</strong> Har vi en god balanse mellom faste rutiner og nye opplevelser?</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>Støtte og motivasjon</h2>
+            <p>For mange er veien til aktivitet avhengig av riktig støtte og en motiverende tilnærming fra personalet.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Viktig huskeregel:</strong> Bruk visuelle støttesystemer og dagsplaner aktivt for å skape oversikt. Når vi vet hva vi skal gjøre, er det lettere å finne motivasjon til å starte!</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bunntekst -->
+    <div id="pas-footer-container"></div>
+
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
