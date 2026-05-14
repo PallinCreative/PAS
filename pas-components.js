@@ -1,5 +1,5 @@
 /**
- * STREAMING_CHUNK: Initialiserer opptegning av Header og Footer
+ * STREAMING_CHUNK: Oppdatert layoutmotor for en stabil footer
  */
 document.addEventListener('DOMContentLoaded', () => {
     renderHeader();
@@ -32,23 +32,23 @@ function renderHeader() {
 
 function renderFooter() {
     const footerHTML = `
-    <footer>
-        <div class="footer-left">
-            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-logo" onerror="this.src='https://placehold.co/200x220/f8fafc/64748b?text=PAS+Logo'">
+    <footer class="main-footer">
+        <div class="footer-col left">
+            <img src="PAS Aktivit med i eget liv logo.png" alt="PAS Logo" class="footer-img" style="height: 180px; width: auto;">
         </div>
         
-        <div class="footer-center">
-            <h2>Positiv atferdsstøtte i Trondheim kommune</h2>
-            <p>Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
+        <div class="footer-col center">
+            <h2 class="footer-title">Positiv atferdsstøtte i Trondheim kommune</h2>
+            <p class="footer-subtitle">Et opplæringsnettsted for ansatte i Bo- og aktivitetstilbudene (BOA) og<br>Helse- og omsorgstjenesten for barn og unge (HABU)</p>
             
-            <div class="editor-section">
-                <p class="editor-label">Ansvarlig redaktør</p>
-                <p style="color: var(--text-main); font-weight: 600;">[Navn på redaktør]</p>
+            <div class="editor-box">
+                <span class="editor-tag">Ansvarlig redaktør</span>
+                <p class="editor-name">[Navn på redaktør]</p>
             </div>
         </div>
 
-        <div class="footer-right">
-            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim Kommune Logo" class="footer-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Trondheim_komm_v%C3%A5pen.svg/400px-Trondheim_komm_v%C3%A5pen.svg.png'">
+        <div class="footer-col right">
+            <img src="Kommunevåpen Farge Google Site.png" alt="Trondheim Kommune Logo" class="footer-img" style="height: 180px; width: auto;">
         </div>
     </footer>
     `;
