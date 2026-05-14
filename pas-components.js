@@ -1,6 +1,3 @@
-/**
- * STREAMING_CHUNK: Oppdatert layoutmotor for en stabil footer
- */
 document.addEventListener('DOMContentLoaded', () => {
     renderHeader();
     renderFooter();
