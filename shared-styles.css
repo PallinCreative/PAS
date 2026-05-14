@@ -50,7 +50,24 @@ color: var(--trondheim-blue);
 font-weight: 800;
 }
 
-/* Søk */
+/* Søk-funksjonalitet */
+.search-trigger {
+cursor: pointer;
+padding: 8px;
+border-radius: 50%;
+transition: all 0.2s ease;
+}
+
+.search-trigger:hover {
+background-color: #f1f5f9;
+transform: scale(1.1);
+}
+
+.search-trigger img {
+height: 48px;
+width: auto;
+}
+
 #search-overlay {
 position: fixed;
 top: -120px;
@@ -63,16 +80,88 @@ align-items: center;
 justify-content: space-between;
 padding: 0 4rem;
 box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-transition: top 0.4s ease;
+transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 z-index: 1100;
+box-sizing: border-box;
 }
-#search-overlay.active { top: 0; }
-#overlay-search-input { width: 100%; border: none; font-size: 28px; outline: none; }
 
-.search-trigger { cursor: pointer; padding: 8px; }
-.search-trigger img { height: 48px; width: auto; }
+#search-overlay.active {
+top: 0;
+}
 
-/* --- ROBUST FOOTER LAYOUT --- */
+.search-input-wrapper {
+flex: 1;
+max-width: 1000px;
+margin: 0 auto;
+position: relative;
+}
+
+#overlay-search-input {
+width: 100%;
+border: none;
+font-size: 28px;
+color: var(--text-main);
+outline: none;
+background: transparent;
+font-weight: 300;
+}
+
+.close-search {
+cursor: pointer;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 32px;
+color: var(--text-muted);
+transition: color 0.2s;
+}
+
+.close-search:hover {
+color: #ef4444;
+}
+
+/* Søkeresultater */
+#overlay-results {
+position: absolute;
+top: 70px;
+left: 0;
+width: 100%;
+background: var(--white);
+box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+max-height: 400px;
+overflow-y: auto;
+border-radius: 0 0 12px 12px;
+border: 1px solid var(--border-color);
+display: none;
+}
+
+.search-result-item {
+padding: 1rem 2rem;
+cursor: pointer;
+border-bottom: 1px solid #f1f5f9;
+transition: background 0.2s;
+}
+
+.search-result-item:hover {
+background-color: #f8fafc;
+}
+
+.search-result-title {
+font-weight: 700;
+color: var(--trondheim-blue);
+font-size: 16px;
+}
+
+.search-result-cat {
+font-size: 12px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+/* Footer (Beholdt fra forrige suksessrike versjon) */
 .main-footer {
 background-color: #ffffff;
 border-top: 1px solid var(--border-color);
@@ -86,54 +175,19 @@ box-sizing: border-box;
 margin-top: auto;
 }
 
-.footer-col {
-display: flex;
-flex-direction: column;
-}
+.footer-col { display: flex; flex-direction: column; }
+.footer-col.left, .footer-col.right { flex: 1; align-items: center; }
+.footer-col.center { flex: 0 0 auto; text-align: center; width: 600px; }
 
-.footer-col.left {
-flex: 1;
-align-items: center; /* Logo midtstilt i venstre felt */
-}
+.footer-img { display: block; max-height: 180px; width: auto; }
+.footer-title { margin: 0 0 5px 0; font-size: 1.15rem; font-weight: 800; color: var(--trondheim-blue); white-space: nowrap; }
+.footer-subtitle { margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
 
-.footer-col.right {
-flex: 1;
-align-items: center; /* Logo midtstilt i høyre felt */
-}
-
-.footer-col.center {
-flex: 0 0 auto;
-text-align: center;
-width: 600px; /* Fast bredde som passer teksten */
-}
-
-.footer-img {
-display: block;
-max-height: 180px;
-width: auto;
-}
-
-.footer-title {
-margin: 0 0 5px 0;
-font-size: 1.15rem;
-font-weight: 800;
-color: var(--trondheim-blue);
-white-space: nowrap;
-}
-
-.footer-subtitle {
-margin: 0;
-font-size: 0.85rem;
-color: var(--text-muted);
-line-height: 1.4;
-}
-
-/* Den smale skillelinjen som fikser problemet /
 .editor-box {
 margin: 15px auto 0 auto;
 padding-top: 10px;
 border-top: 1px solid #e2e8f0;
-width: 250px; / Kort linje slik du ønsket */
+width: 250px;
 }
 
 .editor-tag { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; color: var(--text-muted); }
