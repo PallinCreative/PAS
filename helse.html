@@ -7,6 +7,12 @@
     <!-- Henter felles design -->
     <link rel="stylesheet" href="shared-styles.css">
     <style>
+        :root {
+            /* Temafarge hentet fra helse-stykket i hjulet */
+            --module-color: #727679;
+            --module-light: #f1f2f3;
+        }
+
         main {
             max-width: 900px;
             margin: 40px auto;
@@ -28,54 +34,129 @@
             transform: translateX(-5px);
         }
 
-        .content-card {
-            background: white;
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
+        /* Overskriftseksjon */
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
         }
 
-        h1 {
+        .module-header h1 {
             color: var(--trondheim-blue);
             font-size: 2.5rem;
-            margin-top: 0;
-            margin-bottom: 20px;
+            margin: 0;
         }
 
-        .info-box {
-            background-color: #f8fafc;
-            border-left: 5px solid var(--trondheim-blue);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 12px 12px 0;
+        /* Innholdskort */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
         }
+
+        .content-card h2 {
+            color: var(--module-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Spesifikk stil for Helseplattformen-seksjonen */
+        .hp-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #d1d5db;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hp-box::before {
+            content: "HP";
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(0,0,0,0.03);
+            pointer-events: none;
+        }
+
+        .important-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .important-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .important-list li:last-child { border-bottom: none; }
+
+        .important-list li::before {
+            content: "✓";
+            color: var(--module-color);
+            font-weight: bold;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
     </style>
 </head>
 <body>
 
-    <!-- Her limes navigatorlinjen inn automatisk -->
+    <!-- Her limes navigatorlinjen inn automatisk via pas-components.js -->
     <div id="pas-header-container"></div>
 
     <main>
         <a href="index.html" class="back-link">← Tilbake til hjulet</a>
         
-        <div class="content-card">
+        <section class="module-header">
             <h1>Helse</h1>
-            <p>Helse er en grunnleggende forutsetning for livskvalitet. Innenfor rammeverket for Positiv atferdsstøtte (PAS) ser vi på hvordan vi kan legge til rette for best mulig helse for den enkelte.</p>
-            
-            <div class="info-box">
-                <strong>Husk:</strong> God helse handler ikke bare om fravær av sykdom, men om fysisk, psykisk og sosialt velvære.
-            </div>
+            <p class="text-muted">Fysisk og psykisk velvære som grunnlag for god livskvalitet.</p>
+        </section>
 
-            <p>Her vil vi fylle på med mer spesifikt innhold om helseoppfølging, gode rutiner og forebyggende tiltak i Trondheim kommune.</p>
+        <!-- Seksjon 1: Hva er viktig -->
+        <div class="content-card">
+            <h2>Hva er viktig i helse-stykket?</h2>
+            <p>Innenfor rammeverket for Positiv atferdsstøtte (PAS) ser vi på helse som mer enn bare fravær av sykdom. Det handler om å legge til rette for at den enkelte har de beste forutsetningene for å mestre eget liv.</p>
+            
+            <ul class="important-list">
+                <li><strong>Forebygging:</strong> Gode rutiner for kosthold, søvn og aktivitet.</li>
+                <li><strong>Medvirkning:</strong> Hvordan personen selv opplever sin helse og sine behov.</li>
+                <li><strong>Tidlige tegn:</strong> Kunnskap om personens unike uttrykk for ubehag eller smerte.</li>
+                <li><strong>Samhandling:</strong> Tett dialog mellom pårørende, fastlege og ansatte.</li>
+            </ul>
+        </div>
+
+        <!-- Seksjon 2: Dokumentasjon i Helseplattformen -->
+        <div class="content-card hp-box">
+            <h2>Dokumentasjon i Helseplattformen</h2>
+            <p>Korrekt dokumentasjon er avgjørende for kontinuitet i tjenesten. I Helseplattformen skal helseopplysninger føres på en måte som støtter opp under PAS-arbeidet.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Viktige sjekkpunkter for dokumentasjon:</strong></p>
+                <ul class="important-list">
+                    <li>Bruk nøytrale og beskrivende observasjoner (ikke tolkninger).</li>
+                    <li>Dokumenter tiltak som er gjort for å fremme god helse.</li>
+                    <li>Sørg for at kritiske opplysninger er lett tilgjengelige i pasientens profil.</li>
+                </ul>
+            </div>
+            <p class="text-muted" style="font-style: italic; margin-top: 20px;">Se egne veiledere for spesifikke klikk-stier i Helseplattformen.</p>
         </div>
     </main>
 
-    <!-- Her limes bunnteksten inn automatisk -->
+    <!-- Her limes bunnteksten inn automatisk via pas-components.js -->
     <div id="pas-footer-container"></div>
 
-    <!-- Skriptene som gjør magien -->
+    <!-- Henter nødvendige skript -->
     <script src="site-data.js"></script>
     <script src="pas-components.js"></script>
 </body>
