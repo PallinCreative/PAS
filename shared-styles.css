@@ -114,3 +114,4 @@ gap: 3rem;
 .search-result-item { padding: 1.2rem 4rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
 .search-result-item:hover { background-color: #f8fafc; }
 .search-result-title { font-weight: 700; color: var(--trondheim-blue); font-size: 18px; }
+.search-result-title { font-weight: 700; color: var(--trondheim-blue); font-size: 18px; }
