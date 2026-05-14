@@ -1,4 +1,4 @@
-/* Definerer globale variabler */
+/* STREAMING_CHUNK: Definerer globale variabler */
 :root {
 --trondheim-blue: #003d7a;
 --bg-light: #f8fafc;
@@ -65,7 +65,7 @@ z-index: 1100;
 .search-trigger:hover { background: #f1f5f9; transform: scale(1.05); }
 .search-trigger img { height: 48px; width: auto; }
 
-/* Bunntekst-design /
+/* STREAMING_CHUNK: Bunntekst-design uten hover-effekter /
 footer {
 background-color: #fcfdfe;
 border-top: 1px solid var(--border-color);
@@ -77,8 +77,8 @@ align-items: center;
 gap: 2rem;
 }
 
-.footer-logo { height: 220px; width: auto; transition: transform 0.3s ease; }
-.footer-logo:hover { transform: translateY(-5px); }
+.footer-logo { height: 220px; width: auto; transition: none; }
+.footer-logo:hover { transform: none; }
 
 .footer-left { display: flex; justify-content: flex-start; padding-right: 2rem; }
 .footer-right { display: flex; justify-content: flex-end; }
