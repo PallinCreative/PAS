@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine venner - Det Optimale Livshjulet</title>
+    <!-- Henter felles design -->
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge hentet fra "Mine venner"-stykket i hjulet (#A985C1) */
+            --module-color: #A985C1;
+            --module-light: #f6f2f8;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Overskriftseksjon */
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Innholdskort */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--module-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Spesifikk stil for tilretteleggings-seksjonen */
+        .facilitation-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e0d5e8;
+            position: relative;
+        }
+
+        .important-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .important-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .important-list li:last-child { border-bottom: none; }
+
+        .important-list li::before {
+            content: "✓";
+            color: var(--module-color);
+            font-weight: bold;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Her limes navigatorlinjen inn automatisk -->
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="index.html" class="back-link">← Tilbake til hjulet</a>
+        
+        <section class="module-header">
+            <h1>Mine venner</h1>
+            <p class="text-muted">Betydningen av vennskap og sosialt samvær utenfor familien.</p>
+        </section>
+
+        <!-- Seksjon 1: Hva er viktig -->
+        <div class="content-card">
+            <h2>Hva er viktig for gode vennskap?</h2>
+            <p>Vennskap er ofte preget av frivillighet og felles interesser. For mange av våre tjenestemottakere kan det være behov for støtte fra personalet for å både knytte og opprettholde disse båndene.</p>
+            
+            <ul class="important-list">
+                <li><strong>Felles interesser:</strong> Finne arenaer der personen kan møte andre med samme hobbyer eller interesser.</li>
+                <li><strong>Gjensidighet:</strong> Legge til rette for situasjoner der man kan gjøre noe hyggelig sammen, ikke bare være mottaker av hjelp.</li>
+                <li><strong>Sosiale koder:</strong> Bistå personen med å tolke og navigere i sosiale situasjoner på en respektfull måte.</li>
+                <li><strong>Arenaer:</strong> Bruke lokalsamfunnet, klubber eller organiserte treffpunkter.</li>
+            </ul>
+        </div>
+
+        <!-- Seksjon 2: Personalets rolle -->
+        <div class="content-card facilitation-box">
+            <h2>Personalets rolle som brobygger</h2>
+            <p>Vi skal ikke være "vennen", men vi skal legge til rette for at vennskap kan oppstå og pleies.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Viktige sjekkpunkter:</strong></p>
+                <ul class="important-list">
+                    <li>Hjelp til med praktisk organisering som skyss, invitasjoner eller avtaler.</li>
+                    <li>Vær en diskré støtte i sosiale settinger slik at fokus forblir på relasjonen mellom vennene.</li>
+                    <li>Dokumenter personens ønsker om sosial kontakt i tiltaksplanen.</li>
+                    <li>Snakk med personen om hvem de trives sammen med og hvem de savner å se.</li>
+                </ul>
+            </div>
+            <p class="text-muted" style="font-style: italic; margin-top: 20px;">Husk: Sosiale relasjoner reduserer ensomhet og øker livsgleden betydelig.</p>
+        </div>
+    </main>
+
+    <!-- Her limes bunnteksten inn automatisk -->
+    <div id="pas-footer-container"></div>
+
+    <!-- Henter nødvendige skript -->
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
