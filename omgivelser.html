@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fysiske omgivelser - Det Optimale Livshjulet</title>
+    <!-- Henter felles design -->
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            /* Temafarge hentet fra hjulet (#00747A) */
+            --module-color: #00747A;
+            --module-light: #f0f7f7;
+            --module-border: #b3d1d2;
+        }
 
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--trondheim-blue);
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Overskriftseksjon */
+        .module-header {
+            border-left: 8px solid var(--module-color);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            color: var(--trondheim-blue);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Innholdskort */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .content-card h2 {
+            color: var(--trondheim-blue);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--module-color);
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .environment-box {
+            background-color: var(--module-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--module-border);
+            position: relative;
+        }
+
+        .important-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .important-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .important-list li:last-child { border-bottom: none; }
+
+        .important-list li::before {
+            content: "✓";
+            color: var(--module-color);
+            font-weight: bold;
+        }
+
+        .text-muted { color: var(--text-muted); font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <div id="pas-header-container"></div>
+
+    <main>
+        <a href="index.html" class="back-link">← Tilbake til hjulet</a>
+        
+        <section class="module-header">
+            <h1>Fysiske omgivelser</h1>
+            <p class="text-muted">Steder jeg liker å være og hvordan jeg liker at de skal være.</p>
+        </section>
+
+        <div class="content-card">
+            <h2>Hva betyr de fysiske omgivelsene i PAS?</h2>
+            <p>De fysiske omgivelsene påvirker vår trivsel, trygghet og evne til å mestre hverdagen. I PAS jobber vi for at miljøet skal være tilpasset personens unike behov og preferanser.</p>
+            
+            <ul class="important-list">
+                <li><strong>Forutsigbarhet:</strong> At miljøet er organisert på en måte som gir mening og oversikt.</li>
+                <li><strong>Sanseinntrykk:</strong> Bevissthet rundt lyd, lys, farger og lukt i omgivelsene.</li>
+                <li><strong>Valgmuligheter:</strong> At de fysiske rammene legger til rette for at personen kan velge aktiviteter selv.</li>
+                <li><strong>Trygghet:</strong> At hjemmet og andre arenaer oppleves som trygge og beskyttende.</li>
+            </ul>
+        </div>
+
+        <div class="content-card environment-box">
+            <h2>Kartlegging og tilrettelegging</h2>
+            <p>Som ansatte må vi ha kunnskap om hvordan det fysiske miljøet påvirker personens atferd og livskvalitet.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Viktige fokusområder for personalet:</strong></p>
+                <ul class="important-list">
+                    <li>Gjennomfør regelmessige miljøobservasjoner for å identifisere stressfaktorer.</li>
+                    <li>Sørg for at hjelpemidler og utstyr er lett tilgjengelige og fungerer som de skal.</li>
+                    <li>Dokumenter endringer i miljøet som har positiv effekt på personens trivsel.</li>
+                    <li>Samarbeid med fagpersoner (f.eks. ergoterapeut) ved behov for større tilpasninger.</li>
+                </ul>
+            </div>
+            <p class="text-muted" style="font-style: italic; margin-top: 20px;">Husk: Små justeringer i miljøet kan gi stor mestringsfølelse.</p>
+        </div>
+    </main>
+
+    <div id="pas-footer-container"></div>
+
+    <!-- Henter nødvendige skript -->
+    <script src="site-data.js"></script>
+    <script src="pas-components.js"></script>
+</body>
+</html>
